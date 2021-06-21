@@ -1,0 +1,85 @@
+* {
+    font-family: 'BR Firma Regular', serif;
+    font-size: 14px;
+}
+
+#sidebar .nuxt-link-exact-active {
+    color: white;
+    border-left: 3px solid #fff;
+    background: rgba(159, 162, 180, 0.1);
+}
+
+.notie-background-success {
+    background-color: #3e59cc !important;
+}
+
+.notie-background-warning {
+    background-color: #ed8936 !important;
+}
+
+.notie-background-error {
+    background-color: #e53e3e !important;
+}
+
+.notie-background-info {
+    /* background-color: #2d3748 !important; */
+    background-color: #fff !important;
+    /* background-color: #e2e8f0 !important; */
+}
+
+.notie-background-info .notie-textbox-inner {
+    color: #3e59cc !important;
+}
+
+.notie-background-neutral {
+    background-color: #e2e8f0 !important;
+    color: #1a202c !important;
+}
+
+.notie-textbox-inner {
+    font-family: 'BR Firma Light';
+    font-size: 14px !important;
+}
+
+.notie-textbox-inner::first-letter {
+    text-transform: capitalize !important;
+}
+
+.notie-textbox {
+    color: #fff !important;
+    padding: 10px 20px !important;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    --tw-ring-inset: var(--tw-empty, /*!*/
+    /*!*/
+    );
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: none;
+    /* --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color); */
+    /* --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color); */
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), 0 0 rgba(0, 0, 0, 0);
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 rgba(0, 0, 0, 0));
+    border-color: none;
+}
+
+.notie-alert {
+    z-index: 90000000 !important;
+}
+
+.notie-container {
+    box-shadow: none !important;
+}
+
+.h-fit {
+    height: fit-content !important;
+}
+
+.w-fit {
+    width: fit-content !important;
+}
+
+.nuxt-link-exact-active {
+    color: #3554D1 !important;
+    font-family: 'BR Firma Medium';
+}

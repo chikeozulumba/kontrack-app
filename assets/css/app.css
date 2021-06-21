@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'Sohne-Kraftig';
+  src: url('../fonts/Sohne-Kraftig.eot');
+  src: url('../fonts/Sohne-Kraftig.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Sohne-Kraftig.woff2') format('woff2'),
+    url('../fonts/Sohne-Kraftig.woff') format('woff'),
+    url('../fonts/Sohne-Kraftig.ttf') format('truetype'),
+    url('../fonts/Sohne-Kraftig.svg#Sohne-Kraftig') format('svg');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne-Leicht';
+  src: url('../fonts/Sohne-Leicht.eot');
+  src: url('../fonts/Sohne-Leicht.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Sohne-Leicht.woff2') format('woff2'),
+    url('../fonts/Sohne-Leicht.woff') format('woff'),
+    url('../fonts/Sohne-Leicht.ttf') format('truetype'),
+    url('../fonts/Sohne-Leicht.svg#Sohne-Leicht') format('svg');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne-Halbfett';
+  src: url('../fonts/Sohne-Halbfett.eot');
+  src: url('../fonts/Sohne-Halbfett.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/Sohne-Halbfett.woff2') format('woff2'),
+    url('../fonts/Sohne-Halbfett.woff') format('woff'),
+    url('../fonts/Sohne-Halbfett.ttf') format('truetype'),
+    url('.../fonts/Sohne-Halbfett.svg#Sohne-Halbfett') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+  Custom width
+  */
+@media (min-width: 640px) {
+  .sm\:max-w-ms {
+    max-width: 629px;
+  }
+}
