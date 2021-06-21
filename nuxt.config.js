@@ -7,7 +7,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Loanspot Lenders Platform',
+    title: 'Kontrack | Find the best job',
     meta: [
       { charset: 'utf-8' },
       {
