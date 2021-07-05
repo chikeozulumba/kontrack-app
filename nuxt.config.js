@@ -24,7 +24,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/axios.client', ssr: false },
+    // { src: '~/plugins/axios.client', ssr: false },
     { src: '~/plugins/toast.client', ssr: false },
     { src: '~/plugins/v-calendar.client', ssr: false },
     { src: '~/plugins/vue-fragment.client', ssr: false },
@@ -47,44 +47,34 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseUrl: process.env.AUTH_API_URL,
+    baseUrl: process.env.BASE_URL,
   },
 
   auth: {
     strategies: {
       local: {
-        scheme: 'refresh',
+        // scheme: 'refresh',
         localStorage: {
           prefix: 'auth.',
         },
         token: {
-          prefix: 'accessToken.',
-          property: 'accessToken',
-          maxAge: 86400,
+          prefix: 'token.',
+          property: 'data.access_token',
+          maxAge: 3600,
           type: 'Bearer',
         },
-        refreshToken: {
-          prefix: 'refreshToken.',
-          property: 'refreshToken',
-          data: 'refreshToken',
-          maxAge: 60 * 60 * 24 * 15,
-        },
         user: {
-          property: 'user',
+          property: 'data',
           autoFetch: true,
         },
         endpoints: {
           login: {
-            url: '/auth/signin',
-            method: 'post',
-          },
-          refresh: {
-            url: '/auth/token/refresh/',
+            url: '/auth/login',
             method: 'post',
           },
           user: {
-            url: '/auth/user',
-            method: 'get',
+            url: '/auth/me',
+            method: 'post',
           },
           logout: { url: '/auth/logout', method: 'post' },
         },

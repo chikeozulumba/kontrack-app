@@ -18,7 +18,7 @@ import NavMenuComponent from '~/components/NavMenu'
 export default {
   name: 'AuthLayout',
   components: { NavMenuComponent },
-  // middleware: ['auth'],
+  middleware: ['auth'],
   data() {
     return {
       contentOffset: 0,

@@ -22,9 +22,8 @@
 }
 
 .notie-background-info {
-    /* background-color: #2d3748 !important; */
+    color: #2d3748 !important;
     background-color: #fff !important;
-    /* background-color: #e2e8f0 !important; */
 }
 
 .notie-background-info .notie-textbox-inner {
