@@ -24,7 +24,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    // { src: '~/plugins/axios.client', ssr: false },
+    { src: '~/plugins/store.client', ssr: false },
     { src: '~/plugins/toast.client', ssr: false },
     { src: '~/plugins/v-calendar.client', ssr: false },
     { src: '~/plugins/vue-fragment.client', ssr: false },

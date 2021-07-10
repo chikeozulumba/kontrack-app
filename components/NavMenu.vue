@@ -33,10 +33,10 @@
       />
 
       <span class="md:flex flex-col justify-center hidden">
-        <span class="text-custom-dark-lighter font-firma-light text-sm"
-          >Administrator</span
-        >
-        <span class="font-firma-normal">Chike Ozulumba</span>
+        <span class="text-regalBlue-300 font-firma-light text-xs truncate">{{
+          user.email
+        }}</span>
+        <span class="font-firma-normal">{{ user.name }}</span>
       </span>
       <span class="md:block hidden">
         <svg
@@ -65,6 +65,11 @@ export default {
     customClass: {
       type: String,
       default: undefined,
+    },
+  },
+  computed: {
+    user() {
+      return this.$auth.user
     },
   },
 }

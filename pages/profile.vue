@@ -38,12 +38,15 @@
         </div>
       </div>
 
-      <component :is="view"></component>
+      <keep-alive>
+        <component :is="view" v-if="profileFetched" :user="user" />
+      </keep-alive>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import numeral from 'numeral'
 import slugify from 'slugify'
 
@@ -73,6 +76,10 @@ export default {
     numberFormatter() {
       return numeral
     },
+    ...mapGetters({
+      user: 'profile/profile',
+      profileFetched: 'profile/fetched',
+    }),
   },
   watch: {
     $route(props) {
@@ -81,21 +88,35 @@ export default {
       this.profileMenu = hash[1] || 'bio'
     },
   },
-  mounted() {
+  async mounted() {
     const hash = this.$route.hash.split('#')
     this.view = hash[1] || 'bio'
     this.profileMenu = hash[1] || 'bio'
+    if (!this.profileFetched) {
+      const profile = await this.fetchUser()
+      this.$store.dispatch('profile/setProfile', profile)
+    }
   },
   methods: {
+    async fetchUser() {
+      try {
+        const {
+          data: { data },
+        } = await this.$axios.get('/profile/me')
+        return { fetched: true, data }
+      } catch (error) {
+        this.$toast({
+          text:
+            error?.response?.data?.message ||
+            'Error while retrieving user profile data',
+          type: 'error',
+          time: 4,
+        })
+        return { fetched: false, data: {} }
+      }
+    },
     changeMenu(path) {
       this.$router.push({ path: 'profile', hash: path })
-    },
-    selectDateFilter(r) {
-      this.loanApplication.dateFilter = r
-      this.loanApplication.dateRange = {
-        start: new Date(),
-        end: null,
-      }
     },
   },
 }

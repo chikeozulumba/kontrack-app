@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-auth flex flex-col pt-16 py-4 sm:px-6 lg:px-8">
-    <div class="mb-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="mb-8 sm:mx-auto sm:w-full sm:max-w-lg">
       <div class="bg-white py-8 px-8 sm:rounded-2xl sm:px-14">
         <div class="sm:mx-auto sm:w-full sm:max-w-lg mb-6">
           <h2

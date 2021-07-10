@@ -43,7 +43,6 @@ module.exports = {
         'custom-dark': '#363740',
         'custom-blue': '#007AFF',
         'custom-blue-2': '#3554D1',
-        // 'custom-blue-3': '#3e59cc',
         'custom-blue-3': '#3554D1',
         'custom-blue-light': 'rgba(53, 84, 209, 0.08)',
         'custom-blue-lighter': '#e7f2ff',

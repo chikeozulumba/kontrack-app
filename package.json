@@ -19,8 +19,10 @@
         "@tailwindcss/forms": "^0.3.3",
         "@tailwindcss/ui": "^0.7.2",
         "chart.js": "2.9.4",
+        "cookie": "^0.4.1",
         "core-js": "^3.9.1",
         "dayjs": "^1.10.5",
+        "js-cookie": "^2.2.1",
         "notie": "^4.3.1",
         "numeral": "^2.0.6",
         "nuxt": "^2.15.3",
@@ -28,7 +30,8 @@
         "v-calendar": "^2.3.0",
         "vee-validate": "^3.4.9",
         "vue-chartjs": "^3.5.1",
-        "vue-fragment": "^1.5.2"
+        "vue-fragment": "^1.5.2",
+        "vuex-persistedstate": "^4.0.0-beta.3"
     },
     "devDependencies": {
         "@nuxt/types": "~2.15.0",

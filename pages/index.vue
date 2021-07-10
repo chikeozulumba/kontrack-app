@@ -461,22 +461,11 @@ export default {
       typeOfEmployment,
       salaryRange,
       hourlyDuration,
-      loanApplication: {
-        range: ['7D', '30D', '3M', '6M', '9M'],
-        date: new Date(),
-        dateRange: {
-          start: new Date(),
-          end: null,
-        },
-        masks: {
-          input: 'DD-MM-YY',
-        },
-        dateFilter: '7D',
-      },
-      selectedLoanProducts: {
-        product: null,
-        range: ['Individual', 'SME', 'Payday', 'Car loan'],
-      },
+    }
+  },
+  head() {
+    return {
+      title: 'Browse jobs | Kontrack',
     }
   },
   computed: {
