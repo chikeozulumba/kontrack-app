@@ -23,7 +23,7 @@
 
 <style scoped>
 .bg-auth {
-  background-image: url('/images/auth-bg.jpg');
+  background-image: url('/images/auth-bg.svg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;

@@ -8,7 +8,9 @@
     <h3>Kontrack</h3>
     <ul class="flex gap-x-8">
       <li>
-        <nuxt-link class="font-firma-light" to="/">Browse jobs</nuxt-link>
+        <nuxt-link class="font-firma-light" to="/companies"
+          >Companies</nuxt-link
+        >
       </li>
       <li>
         <nuxt-link class="font-firma-light" to="/applications"
@@ -33,7 +35,7 @@
       />
 
       <span class="md:flex flex-col justify-center hidden">
-        <span class="text-regalBlue-300 font-firma-light text-xs truncate">{{
+        <span class="text-regalRed-300 font-firma-light text-xs truncate">{{
           user.email
         }}</span>
         <span class="font-firma-normal">{{ user.name }}</span>

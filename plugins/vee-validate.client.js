@@ -28,15 +28,20 @@ localize({
           'Please your password must contain at least one uppercase letter, one lowercase letter, one number and one special character',
         required: 'Please enter your password',
       },
+      passwordConfirmation: {
+        regex:
+          'Please your password must contain at least one uppercase letter, one lowercase letter, one number and one special character',
+        required: 'Please enter your password confirmation',
+      },
       firstName: {
         required: 'Please enter your first name',
       },
       lastName: {
         required: 'Please enter your lastname',
       },
-      phoneNumber: {
-        regex: 'Please your 11 digit phone number',
+      phone: {
         required: 'Please enter your phone number',
+        regex: 'Invalid phone number format',
       },
       jobTitle: {
         required: 'Please enter your job title',

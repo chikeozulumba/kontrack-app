@@ -29,6 +29,7 @@ export default {
     { src: '~/plugins/v-calendar.client', ssr: false },
     { src: '~/plugins/vue-fragment.client', ssr: false },
     { src: '~/plugins/vee-validate.client', ssr: false },
+    { src: '~/plugins/jquery.client', ssr: false },
   ],
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

@@ -5,8 +5,8 @@
         <div class="grid sticky top-10">
           <div>
             <div class="flex justify-between items-center">
-              <legend class="font-firma-medium text-regalBlue-300 uppercase">
-                Links
+              <legend class="font-firma-semibold text-gray-600 uppercase">
+                Menu
               </legend>
             </div>
             <div class="mt-4 grid gap-y-1">
@@ -26,8 +26,8 @@
                 "
                 :class="[
                   profileMenu === menu.path
-                    ? 'bg-blue-50 text-regalBlue-300 font-firma-medium'
-                    : 'text-gray-500 hover:bg-custom-dark-lighter-4',
+                    ? 'bg-red-50 text-regalRed-300 font-firma-medium'
+                    : 'text-gray-500 hover:bg-red-50',
                 ]"
                 @click.prevent="() => changeMenu(menu.path)"
               >
@@ -39,7 +39,12 @@
       </div>
 
       <keep-alive>
-        <component :is="view" v-if="profileFetched" :user="user" />
+        <component
+          :is="view"
+          v-if="profileFetched"
+          :user="user"
+          @profile="profileUpdated"
+        />
       </keep-alive>
     </div>
   </div>
@@ -50,14 +55,14 @@ import { mapGetters } from 'vuex'
 import numeral from 'numeral'
 import slugify from 'slugify'
 
-const menus = ['Bio', 'Change Password', 'Notifications', 'Settings'].map(
+const menus = ['Profile', 'Change Password', 'Notifications', 'Settings'].map(
   (m) => ({ title: m, path: slugify(m, { lower: true, replacement: '-' }) })
 )
 
 export default {
   name: 'Profile',
   components: {
-    bio: () => import('~/components/pages/profile/bio'),
+    profile: () => import('~/components/pages/profile/profile'),
     'change-password': () =>
       import('~/components/pages/profile/change-password'),
     notifications: () => import('~/components/pages/profile/notifications'),
@@ -67,9 +72,9 @@ export default {
   data() {
     return {
       menus,
-      profileMenu: 'bio',
+      profileMenu: 'profile',
       avatar: null,
-      view: 'bio',
+      view: 'profile',
     }
   },
   computed: {
@@ -77,27 +82,38 @@ export default {
       return numeral
     },
     ...mapGetters({
-      user: 'profile/profile',
       profileFetched: 'profile/fetched',
     }),
+    user() {
+      let user = this.$store.getters['profile/profile']
+      user = {
+        ...user,
+        email: user.user_email,
+        languages: user.languages || [],
+      }
+      return user
+    },
   },
   watch: {
     $route(props) {
       const hash = props.hash.split('#')
-      this.view = hash[1] || 'bio'
-      this.profileMenu = hash[1] || 'bio'
+      this.view = hash[1] || 'profile'
+      this.profileMenu = hash[1] || 'profile'
     },
   },
   async mounted() {
     const hash = this.$route.hash.split('#')
-    this.view = hash[1] || 'bio'
-    this.profileMenu = hash[1] || 'bio'
+    this.view = hash[1] || 'profile'
+    this.profileMenu = hash[1] || 'profile'
     if (!this.profileFetched) {
       const profile = await this.fetchUser()
       this.$store.dispatch('profile/setProfile', profile)
     }
   },
   methods: {
+    async profileUpdated() {
+      this.$store.dispatch('profile/setProfile', await this.fetchUser())
+    },
     async fetchUser() {
       try {
         const {

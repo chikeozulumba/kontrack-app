@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<svg width="1440" height="822" viewBox="0 0 1440 822" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1440" height="823" fill="url(#paint0_linear)"/>
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="1440" height="823">
+<rect width="1440" height="823" fill="url(#paint1_linear)"/>
+</mask>
+<g mask="url(#mask0)">
+<g opacity="0.08">
+<rect x="0.5" y="-143.86" width="940.882" height="940.882" rx="52.3061" stroke="#F9F1F1"/>
+</g>
+<g opacity="0.08">
+<rect x="71.6613" y="-67.2247" width="940.882" height="940.882" rx="52.3061" stroke="#F9F1F1"/>
+</g>
+<g opacity="0.08">
+<rect x="142.821" y="9.41211" width="940.882" height="940.882" rx="52.3061" stroke="#F9F1F1"/>
+</g>
+<g opacity="0.08">
+<rect x="213.978" y="86.0455" width="940.882" height="940.882" rx="52.3061" stroke="#F9F1F1"/>
+</g>
+<g opacity="0.08">
+<rect x="285.14" y="162.675" width="940.882" height="940.882" rx="52.3061" stroke="#F9F1F1"/>
+</g>
+<g opacity="0.08">
+<rect x="356.3" y="239.307" width="940.882" height="940.882" rx="52.3061" stroke="#F9F1F1"/>
+</g>
+<g opacity="0.08">
+<rect x="427.457" y="315.94" width="940.882" height="940.882" rx="52.3061" stroke="#F9F1F1"/>
+</g>
+<g opacity="0.08">
+<rect x="498.617" y="392.577" width="940.882" height="940.882" rx="52.3061" stroke="#F9F1F1"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear" x1="42" y1="-13.7167" x2="292.465" y2="921.436" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F03738"/>
+<stop offset="1" stop-color="#C9292A"/>
+</linearGradient>
+<linearGradient id="paint1_linear" x1="42" y1="-13.7167" x2="292.465" y2="921.436" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F03738"/>
+<stop offset="1" stop-color="#F03738"/>
+</linearGradient>
+</defs>
+</svg>

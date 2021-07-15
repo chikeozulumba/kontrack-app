@@ -22,12 +22,11 @@
 }
 
 .notie-background-info {
-    color: #2d3748 !important;
-    background-color: #fff !important;
+    background-color: #2d3748 !important;
 }
 
 .notie-background-info .notie-textbox-inner {
-    color: #3e59cc !important;
+    color: #fff !important;
 }
 
 .notie-background-neutral {
@@ -79,6 +78,42 @@
 }
 
 .nuxt-link-exact-active {
-    color: #3554D1 !important;
+    color: #F03738 !important;
     font-family: 'BR Firma Medium';
+}
+
+span.select2-selection__choice__display {
+    font-size: 0.8rem;
+}
+
+li.select2-results__option,
+span.select2-selection__choice__display,
+select2-results__option--selectable select2-results__option--highlighted {
+    text-transform: capitalize;
+}
+
+span.select2-container--default .select2-selection--multiple {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    width: 100%;
+    padding: 0.7rem;
+    /* padding-top: 0.4rem;
+    padding-left: 0.4rem; */
+}
+
+.select2-container--default .select2-selection--multiple {
+    border: solid rgba(229, 231, 235, 1) 1px !important;
+    outline: 0;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    border: solid rgba(229, 231, 235, 1) 1px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    border-right: transparent !important;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: #F03738 !important;
 }

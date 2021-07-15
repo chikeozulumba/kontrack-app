@@ -47,13 +47,12 @@
                       block
                       py-4
                       px-4
-                      border border-grey-200
+                      border-2 border-grey-200
                       rounded-md
-                      shadow-sm
                       placeholder-gray-800
                       focus:outline-none
-                      focus:ring-indigo-500
-                      focus:border-indigo-500
+                      focus:ring-regalRed-200
+                      focus:border-regalRed-200
                     "
                     placeholder="Enter full name"
                     name="name"
@@ -125,11 +124,10 @@
                       px-4
                       border border-grey-200
                       rounded-md
-                      shadow-sm
                       placeholder-gray-800
                       focus:outline-none
-                      focus:ring-indigo-500
-                      focus:border-indigo-500
+                      focus:ring-regalRed-200
+                      focus:border-regalRed-200
                     "
                     placeholder="Enter email address"
                     name="email"
@@ -187,7 +185,7 @@
               </label>
               <ValidationProvider
                 v-slot="{ errors }"
-                :rules="{ required: true, regex: /^0[0-9]{11}$/ }"
+                :rules="{ required: true, regex: /^\d+$/ }"
               >
                 <div class="relative text-gray-700 mt-1">
                   <input
@@ -204,11 +202,10 @@
                       px-4
                       border border-grey-200
                       rounded-md
-                      shadow-sm
                       placeholder-gray-800
                       focus:outline-none
-                      focus:ring-indigo-500
-                      focus:border-indigo-500
+                      focus:ring-regalRed-200
+                      focus:border-regalRed-200
                     "
                     placeholder="Enter phone number"
                     name="phone"
@@ -282,8 +279,8 @@
                       shadow-none
                       placeholder-gray-800
                       focus:outline-none
-                      focus:ring-indigo-500
-                      focus:border-indigo-500
+                      focus:ring-regalRed-200
+                      focus:border-regalRed-200
                     "
                     placeholder="Enter password"
                     name="password"
@@ -396,11 +393,11 @@
                       shadow-none
                       placeholder-gray-800
                       focus:outline-none
-                      focus:ring-indigo-500
-                      focus:border-indigo-500
+                      focus:ring-regalRed-200
+                      focus:border-regalRed-200
                     "
                     placeholder="Enter password"
-                    name="password"
+                    name="passwordConfirmation"
                     :type="viewPasswordConfirmation ? 'text' : 'password'"
                   />
                   <div
@@ -490,12 +487,12 @@
                   text-small3
                   font-medium
                   text-white
-                  bg-regalBlue-200
-                  hover:bg-regalBlue-300
+                  bg-regalRed-200
+                  hover:bg-regalRed-300
                   focus:outline-none
                   focus:ring-2
                   focus:ring-offset-2
-                  focus:ring-indigo-500
+                  focus:ring-regalRed-200
                 "
               >
                 Register
@@ -509,8 +506,8 @@
                   class="
                     text-sm
                     font-bold
-                    text-regalBlue-200
-                    hover:text-regalBlue-300
+                    text-regalRed-200
+                    hover:text-regalRed-300
                   "
                 >
                   Login
@@ -542,6 +539,7 @@ export default {
   methods: {
     async register() {
       try {
+        this.serverErrors = {}
         const validate = await this.$refs.register?.validate()
         if (!validate) {
           return this.$toast({
@@ -577,7 +575,7 @@ export default {
           text:
             error?.response?.data?.message ||
             'You are not allowed to access your account due to an internal error that would be resolved soon.',
-          type: 'error',
+          type: 'info',
           time: 4,
         })
       }
