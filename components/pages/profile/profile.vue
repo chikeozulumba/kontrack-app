@@ -252,11 +252,13 @@
                     v-model="date"
                     mode="date"
                     :max-date="new Date()"
+                    color="red"
                   >
                     <template #default="{ inputValue, inputEvents }">
                       <input
                         class="
-                          focus:ring-regalRed-200 focus:border-regalRed-200
+                          focus:ring-2 focus:ring-regalRed-200
+                          datepicker
                           block
                           w-full
                           sm:text-lg
@@ -332,15 +334,15 @@
 
                 <div class="col-span-6 sm:col-span-6 lg:col-span-3">
                   <label
-                    for="state"
+                    for="province"
                     class="block text-sm font-medium text-gray-700"
-                    >State</label
+                    >Province</label
                   >
                   <input
-                    id="state"
-                    v-model="form.state"
+                    id="province"
+                    v-model="form.province"
                     type="text"
-                    name="state"
+                    name="province"
                     class="
                       focus:ring-regalRed-200 focus:border-regalRed-200
                       block
@@ -467,7 +469,6 @@
                       v-for="(lang, i) in allLanguages"
                       :key="i"
                       :value="lang.name"
-                      :selected="user.languages.includes(lang)"
                     >
                       {{ lang.name }}
                     </option>
@@ -505,7 +506,7 @@
                   </select>
                 </div>
 
-                <div class="col-span-6">
+                <!-- <div class="col-span-6">
                   <label
                     for="additional_details"
                     class="block text-sm font-medium text-gray-700"
@@ -527,7 +528,7 @@
                       resize-none
                     "
                   />
-                </div>
+                </div> -->
               </div>
               <div v-if="formDirty" class="grid grid-cols-1">
                 <button
@@ -587,6 +588,14 @@ export default {
       },
       deep: true,
     },
+    date() {
+      this.formDirty = true
+    },
+    avatarBase64(val) {
+      if (val?.length > 0) {
+        this.formDirty = true
+      }
+    },
   },
   async mounted() {
     this.jobCategories = await this.$getJobCategories()
@@ -612,7 +621,7 @@ export default {
   methods: {
     async $getJobCategories() {
       try {
-        return (await this.$axios.get('/job/category/index')).data?.data?.data
+        return (await this.$axios.get('/job/category/index')).data?.data
       } catch (error) {
         return []
       }
@@ -642,6 +651,7 @@ export default {
           potraits: this.avatarBase64,
         })
         if (status === 200) {
+          this.formDirty = false
           this.$emit('profile')
           this.$toast({
             text: 'Profile updated successfully.',
@@ -701,3 +711,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.datepicker:focus-visible {
+  outline: none !important;
+}
+</style>

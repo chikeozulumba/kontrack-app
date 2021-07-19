@@ -8,9 +8,7 @@
     <h3>Kontrack</h3>
     <ul class="flex gap-x-8">
       <li>
-        <nuxt-link class="font-firma-light" to="/companies"
-          >Companies</nuxt-link
-        >
+        <nuxt-link class="font-firma-light" to="/">Overview</nuxt-link>
       </li>
       <li>
         <nuxt-link class="font-firma-light" to="/applications"
@@ -38,7 +36,9 @@
         <span class="text-regalRed-300 font-firma-light text-xs truncate">{{
           user.email
         }}</span>
-        <span class="font-firma-normal">{{ user.name }}</span>
+        <span class="font-firma-normal"
+          >{{ user.first_name }} {{ user.last_name }}</span
+        >
       </span>
       <span class="md:block hidden">
         <svg
@@ -71,7 +71,12 @@ export default {
   },
   computed: {
     user() {
-      return this.$auth.user
+      const user = this.$store.getters['profile/profile']
+      return {
+        ...user,
+        ...(user.profile || {}),
+        profile_id: user?.profile?.id,
+      }
     },
   },
 }

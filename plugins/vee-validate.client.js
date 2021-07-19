@@ -37,7 +37,7 @@ localize({
         required: 'Please enter your first name',
       },
       lastName: {
-        required: 'Please enter your lastname',
+        required: 'Please enter your last name',
       },
       phone: {
         required: 'Please enter your phone number',
@@ -50,7 +50,7 @@ localize({
         required: 'Please enter your work email address',
       },
       name: {
-        required: 'Please enter your company name',
+        required: 'Please enter your name',
       },
       officalEmail: {
         required: 'Please enter your company email address',

@@ -74,8 +74,8 @@ export default {
             method: 'post',
           },
           user: {
-            url: '/auth/me',
-            method: 'post',
+            url: '/profile/me',
+            method: 'get',
           },
           logout: { url: '/auth/logout', method: 'post' },
         },
@@ -93,6 +93,9 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: ['vee-validate/dist/rules'],
+    postcss: {
+      'postcss-focus-visible': {},
+    },
   },
 
   tailwindcss: {

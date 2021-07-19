@@ -55,9 +55,16 @@ import { mapGetters } from 'vuex'
 import numeral from 'numeral'
 import slugify from 'slugify'
 
-const menus = ['Profile', 'Change Password', 'Notifications', 'Settings'].map(
-  (m) => ({ title: m, path: slugify(m, { lower: true, replacement: '-' }) })
-)
+const menus = [
+  'Company',
+  'Profile',
+  'Change Password',
+  'Notifications',
+  'Settings',
+].map((m) => ({
+  title: m,
+  path: slugify(m, { lower: true, replacement: '-' }),
+}))
 
 export default {
   name: 'Profile',
@@ -67,6 +74,7 @@ export default {
       import('~/components/pages/profile/change-password'),
     notifications: () => import('~/components/pages/profile/notifications'),
     settings: () => import('~/components/pages/profile/settings'),
+    company: () => import('~/components/pages/profile/company'),
   },
   layout: 'authenticated',
   data() {
@@ -85,13 +93,12 @@ export default {
       profileFetched: 'profile/fetched',
     }),
     user() {
-      let user = this.$store.getters['profile/profile']
-      user = {
+      const user = this.$store.getters['profile/profile']
+      return {
         ...user,
-        email: user.user_email,
-        languages: user.languages || [],
+        ...(user.profile || {}),
+        profile_id: user?.profile?.id,
       }
-      return user
     },
   },
   watch: {

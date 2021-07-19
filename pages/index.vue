@@ -1,408 +1,348 @@
 <template>
   <div class="max-w-8xl mx-auto grid gap-y-8 w-full mt-8">
     <div class="w-full">
-      <form action="" class="grid grid-cols-8 divide-x divide-gray-100">
-        <div class="col-span-3 relative">
-          <input
-            class="
-              px-8
-              py-6
-              pl-16
-              focus:outline-none
-              text-xl
-              font-firma-light
-              w-full
-              rounded-l-xl
-              border-l border-t border-b border-gray-100
-            "
-            placeholder="Search for jobs e.g. Plumbing, Mechanic"
-          />
+      <legend class="font-firma-semibold md:text-2xl text-xl">Overview</legend>
+      <div class="mt-4 grid grid-cols-12 gap-x-4 md:gap-x-8 md:gap-y-0 gap-y-4">
+        <div
+          class="
+            md:col-span-4
+            col-span-12
+            border border-gray-200
+            md:h-32
+            rounded-2xl
+            flex
+            items-center
+            justify-start
+            py-4
+            pl-8
+            gap-x-8
+          "
+        >
           <svg
-            class="h-4 absolute top-8 left-5 text-custom-blue-2 fill-current"
+            class="hidden xl:block"
+            width="60"
+            height="60"
+            viewBox="0 0 64 64"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
           >
+            <circle cx="32" cy="32" r="32" fill="#EBF4FF" />
             <path
-              d="M225.474 0C101.151 0 0 101.151 0 225.474c0 124.33 101.151 225.474 225.474 225.474 124.33 0 225.474-101.144 225.474-225.474C450.948 101.151 349.804 0 225.474 0zm0 409.323c-101.373 0-183.848-82.475-183.848-183.848S124.101 41.626 225.474 41.626s183.848 82.475 183.848 183.848-82.475 183.849-183.848 183.849z"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M44.6987 29.0038C43.8466 23.7592 39.3919 19.8576 34.0808 19.704C33.8283 19.6941 33.5822 19.785 33.3968 19.9567C33.2114 20.1284 33.1018 20.3668 33.0923 20.6193V20.7047L33.6903 29.6506C33.7295 30.2528 34.2472 30.7106 34.8497 30.6758L43.82 30.0777C44.0727 30.059 44.3076 29.9403 44.4725 29.7479C44.6375 29.5555 44.7189 29.3052 44.6987 29.0526V29.0038Z"
+              fill="#007AFF"
+              stroke="#007AFF"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             />
             <path
-              d="M505.902 476.472L386.574 357.144c-8.131-8.131-21.299-8.131-29.43 0-8.131 8.124-8.131 21.306 0 29.43l119.328 119.328A20.74 20.74 0 00491.187 512a20.754 20.754 0 0014.715-6.098c8.131-8.124 8.131-21.306 0-29.43z"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M27.8688 25.0252C28.4395 24.8932 29.0234 25.1852 29.2601 25.7208C29.3222 25.8468 29.3595 25.9836 29.37 26.1236C29.492 27.8566 29.7483 31.6522 29.8948 33.7025C29.9198 34.0719 30.0909 34.416 30.3704 34.6588C30.6498 34.9016 31.0145 35.023 31.3837 34.9962L38.9138 34.5324C39.25 34.5122 39.5796 34.6318 39.8246 34.8629C40.0695 35.094 40.2081 35.4161 40.2075 35.7529C39.9024 40.3 36.6354 44.1014 32.1858 45.0868C27.7362 46.0721 23.1697 44.0054 20.9733 40.0122C20.3177 38.8629 19.9025 37.5924 19.7529 36.2777C19.689 35.8742 19.6644 35.4655 19.6797 35.0572C19.6926 30.2012 23.103 26.0171 27.8566 25.0252"
+              fill="#007AFF"
+            />
+            <path
+              d="M27.8688 25.0252C28.4395 24.8932 29.0234 25.1852 29.2601 25.7208C29.3222 25.8468 29.3595 25.9836 29.37 26.1236C29.492 27.8566 29.7483 31.6522 29.8948 33.7025C29.9198 34.0719 30.0909 34.416 30.3704 34.6588C30.6498 34.9016 31.0145 35.023 31.3837 34.9962V34.9962L38.9138 34.5324C39.25 34.5122 39.5796 34.6318 39.8246 34.8629C40.0695 35.094 40.2081 35.4161 40.2075 35.7529V35.7529C39.9024 40.3 36.6354 44.1014 32.1858 45.0868C27.7362 46.0721 23.1697 44.0054 20.9733 40.0122C20.3177 38.8629 19.9025 37.5924 19.7529 36.2777C19.689 35.8742 19.6644 35.4655 19.6797 35.0572C19.6926 30.2012 23.103 26.0171 27.8566 25.0252"
+              stroke="#007AFF"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             />
           </svg>
+          <div class="grid">
+            <p class="font-firma-light text-sm">Total amount spent</p>
+            <p class="text-3xl font-firma-semibold">
+              <sup class="text-sm font-firma-semibold">CAD</sup>
+              {{ numberFormatter(summary.totalLoanVolume).format('0,0.0') }}
+            </p>
+          </div>
         </div>
-        <div class="col-span-2 relative w-full">
-          <input
-            class="
-              px-8
-              py-6
-              pl-16
-              focus:outline-none
-              text-xl
-              font-firma-light
-              border-t border-b border-gray-100
-              w-full
-            "
-            placeholder="Enter location"
-          />
+        <div
+          class="
+            md:col-span-4
+            col-span-12
+            border border-gray-200
+            md:h-32
+            rounded-2xl
+            flex
+            items-center
+            justify-start
+            py-4
+            pl-8
+            gap-x-8
+          "
+        >
           <svg
-            class="h-4 absolute top-8 left-5 text-custom-blue-2 fill-current"
+            class="hidden xl:block"
+            width="60"
+            height="60"
+            viewBox="0 0 64 64"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
           >
-            <path
-              d="M256 0C156.748 0 76 80.748 76 180c0 33.534 9.289 66.26 26.869 94.652l142.885 230.257A15 15 0 00258.499 512h.119a14.997 14.997 0 0012.75-7.292L410.611 272.22C427.221 244.428 436 212.539 436 180 436 80.748 355.252 0 256 0zm128.866 256.818L258.272 468.186l-129.905-209.34C113.734 235.214 105.8 207.95 105.8 180c0-82.71 67.49-150.2 150.2-150.2S406.1 97.29 406.1 180c0 27.121-7.411 53.688-21.234 76.818z"
+            <circle cx="32" cy="32" r="32" fill="#EBFAF4" />
+            <ellipse
+              cx="30.9532"
+              cy="25.7041"
+              rx="6.58307"
+              ry="6.37071"
+              fill="#02AA65"
+              stroke="#02AA65"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             />
             <path
-              d="M256 90c-49.626 0-90 40.374-90 90 0 49.309 39.717 90 90 90 50.903 0 90-41.233 90-90 0-49.626-40.374-90-90-90zm0 150.2c-33.257 0-60.2-27.033-60.2-60.2 0-33.084 27.116-60.2 60.2-60.2s60.1 27.116 60.1 60.2c0 32.683-26.316 60.2-60.1 60.2z"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M20.5113 40.9352C20.5095 40.4873 20.613 40.0449 20.8139 39.6415C21.4445 38.4211 23.2227 37.7742 24.6982 37.4813C25.7623 37.2615 26.8412 37.1147 27.9267 37.042C29.9364 36.8711 31.9577 36.8711 33.9674 37.042C35.0529 37.1156 36.1316 37.2624 37.1959 37.4813C38.6714 37.7742 40.4496 38.36 41.0802 39.6415C41.4843 40.4639 41.4843 41.4186 41.0802 42.241C40.4496 43.5225 38.6714 44.1083 37.1959 44.389C36.133 44.6179 35.0538 44.7688 33.9674 44.8406C32.3317 44.9748 30.6883 44.9992 29.0491 44.9138C28.6707 44.9138 28.305 44.9138 27.9267 44.8406C26.8444 44.7697 25.7693 44.6187 24.7108 44.389C23.2227 44.1083 21.4571 43.5225 20.8139 42.241C20.614 41.8329 20.5106 41.3868 20.5113 40.9352Z"
+              fill="#02AA65"
+              stroke="#02AA65"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             />
           </svg>
+
+          <div class="grid">
+            <p class="font-firma-light text-sm">Companies available</p>
+            <p class="text-3xl font-firma-semibold">
+              <sup class="text-sm font-firma-semibold">No.</sup>
+              {{
+                numberFormatter(summary.totalNumberOfLoanApplication).format(
+                  '0,0'
+                )
+              }}
+            </p>
+          </div>
         </div>
-        <!-- <div>
-          <input
-            class="
-              px-8
-              py-6
-              focus:outline-none
-              text-xl
-              font-firma-light
-              border-t border-b border-gray-100
-            "
-          />
-        </div> -->
-        <div class="w-full relative col-span-2">
-          <input
-            class="
-              px-8
-              py-6
-              pl-16
-              focus:outline-none
-              text-xl
-              font-firma-light
-              border-t border-b border-gray-100
-              w-full
-            "
-            placeholder="Enter amount expected"
-          />
+        <div
+          class="
+            md:col-span-4
+            col-span-12
+            border border-gray-200
+            md:h-32
+            rounded-2xl
+            flex
+            items-center
+            justify-start
+            py-4
+            pl-8
+            gap-x-8
+          "
+        >
           <svg
-            class="h-4 absolute top-8 left-5 text-custom-blue-2 fill-current"
+            class="hidden xl:block"
+            width="60"
+            height="60"
+            viewBox="0 0 64 64"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 339.004 339.004"
           >
+            <circle cx="32" cy="32" r="32" fill="#FEF7EE" />
             <path
-              d="M262.122 232.344c.197-26.82-10.405-48.031-31.552-63.01-16.333-11.533-36.154-17.549-55.325-23.33-39.936-12.107-51.521-18.484-51.521-37.582 0-21.273 27.646-28.842 51.313-28.842 17.236 0 37.066 5.359 49.381 13.301l24.415-37.812c-16.095-10.434-38.123-17.551-59.875-19.76V0H143.92v37.785c-40.035 8.807-65.255 34.973-65.255 70.637 0 24.977 10.379 44.785 30.79 58.756 15.524 10.666 34.457 16.393 52.746 21.938 39.172 11.84 55.079 19.055 54.898 42.949l-.001.176c0 20.055-26.577 27.184-49.346 27.184-21.508 0-44.897-9.426-58.155-23.441l-32.719 30.949c16.79 17.758 41.184 30.313 67.041 35.234v36.838h45.039V302.96c44.487-6.368 73.12-33.151 73.164-70.616z"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M36.8193 26.8281L29.7395 34.4303L21.4508 28.9886C20.3647 28.2754 20.5848 26.516 21.8084 26.1372L41.3777 20.0632C42.4906 19.7197 43.5195 20.8326 43.1863 22.0252L37.3799 42.8776C37.0163 44.1825 35.3853 44.4085 34.7261 43.2434L29.7395 34.4303"
+              fill="#D5AD7A"
+            />
+            <path
+              d="M36.8193 26.8281L29.7395 34.4303L21.4508 28.9886C20.3647 28.2754 20.5848 26.516 21.8084 26.1372L41.3777 20.0632C42.4906 19.7197 43.5195 20.8326 43.1863 22.0252L37.3799 42.8776C37.0163 44.1825 35.3853 44.4085 34.7261 43.2434L29.7395 34.4303"
+              stroke="#FEF7EE"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             />
           </svg>
-        </div>
-        <div class="overflow-hidden">
-          <button
-            class="
-              px-8
-              h-full
-              w-full
-              text-white
-              font-firma-medium
-              bg-regalBlue-200
-              rounded-r-xl
-            "
-          >
-            Find Job
-          </button>
-        </div>
-      </form>
-    </div>
-    <div class="w-full grid grid-cols-4 md:gap-x-8">
-      <div class="col-span-1">
-        <div class="grid sticky top-10">
-          <div class="p-6 rounded-2xl bg-custom-blue-lighter h-fit">
-            <h3 class="font-firma-bold">Create job alert</h3>
-            <h6 class="text-sm font-firma-light text-custom-dark-lighter">
-              Create job alert now and never miss a job
-            </h6>
-            <div class="mt-8 grid gap-y-4">
-              <input
-                class="
-                  border border-custom-blue-lighter
-                  rounded-xl
-                  w-full
-                  p-4
-                  focus:outline-none
-                  font-firma-light
-                "
-                type="text"
-                placeholder="Enter keyword"
-              />
-              <button
-                class="
-                  p-3
-                  px-4
-                  text-sm
-                  font-firma-light
-                  text-white
-                  bg-regalBlue-200
-                  rounded-xl
-                  mt-2
-                "
-                style="width: fit-content"
-              >
-                Create job alerts
-              </button>
-            </div>
-          </div>
-          <div class="mt-8">
-            <div class="flex justify-between items-center">
-              <legend class="font-firma-medium">Type of employement</legend>
-            </div>
-            <div class="mt-4 grid gap-y-0.5">
-              <!-- <div class="flex justify-between"></div> -->
 
-              <div
-                v-for="(e, i) in typeOfEmployment"
-                :key="i"
-                class="flex items-center cursor-pointer"
-              >
-                <div class="flex items-center">
-                  <input
-                    :id="e.slug"
-                    v-model="typeOfEmployment[i].checked"
-                    :name="e.slug"
-                    type="checkbox"
-                    class="
-                      h-4
-                      w-4
-                      text-regalBlue-200
-                      focus:ring-regalBlue-200
-                      border-gray-200
-                      rounded
-                    "
-                  />
-                </div>
-                <div class="ml-3 mt-2 flex justify-between w-full">
-                  <label
-                    :for="e.slug"
-                    class="font-firma-light text-custom-dark text-sm"
-                    >{{ e.name }}</label
-                  >
-                  <label
-                    :for="e.slug"
-                    class="
-                      px-2
-                      py-1
-                      rounded
-                      text-xs
-                      font-firma-semibold
-                      opacity-70
-                      cursor-pointer
-                    "
-                    :class="[
-                      typeOfEmployment[i].checked
-                        ? 'bg-custom-blue-lighter text-regalBlue-200'
-                        : 'bg-custom-gray-bg text-custom-dark',
-                    ]"
-                    >{{ e.value }}</label
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-8">
-            <div class="flex justify-between items-center">
-              <legend class="font-firma-medium">Salary range</legend>
-            </div>
-            <div class="mt-4 grid gap-y-0.5">
-              <div
-                v-for="(e, i) in salaryRange"
-                :key="i"
-                class="flex items-center cursor-pointer"
-              >
-                <div class="flex items-center">
-                  <input
-                    :id="e.slug"
-                    v-model="salaryRange[i].checked"
-                    :name="e.slug"
-                    type="checkbox"
-                    class="
-                      h-4
-                      w-4
-                      text-regalBlue-200
-                      focus:ring-regalBlue-200
-                      border-gray-200
-                      rounded
-                    "
-                  />
-                </div>
-                <div class="ml-3 mt-2 flex justify-between w-full">
-                  <label
-                    :for="e.slug"
-                    class="font-firma-light text-custom-dark text-sm"
-                    >{{ e.name }}</label
-                  >
-                  <label
-                    :for="e.slug"
-                    class="
-                      px-2
-                      py-1
-                      rounded
-                      text-xs
-                      font-firma-semibold
-                      opacity-70
-                      cursor-pointer
-                    "
-                    :class="[
-                      salaryRange[i].checked
-                        ? 'bg-custom-blue-lighter text-regalBlue-200'
-                        : 'bg-custom-gray-bg text-custom-dark',
-                    ]"
-                    >{{ e.quantity }}</label
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-8">
-            <div class="flex justify-between items-center">
-              <legend class="font-firma-medium">Duration</legend>
-            </div>
-            <div class="mt-4 grid gap-y-0.5">
-              <div
-                v-for="(e, i) in hourlyDuration"
-                :key="i"
-                class="flex items-center cursor-pointer"
-              >
-                <div class="flex items-center">
-                  <input
-                    :id="e.slug"
-                    v-model="hourlyDuration[i].checked"
-                    :name="e.slug"
-                    type="checkbox"
-                    class="
-                      h-4
-                      w-4
-                      text-regalBlue-200
-                      focus:ring-regalBlue-200
-                      border-gray-200
-                      rounded
-                    "
-                  />
-                </div>
-                <div class="ml-3 mt-2 flex justify-between w-full">
-                  <label
-                    :for="e.slug"
-                    class="font-firma-light text-custom-dark text-sm"
-                    >{{ e.name }}</label
-                  >
-                  <label
-                    :for="e.slug"
-                    class="
-                      px-2
-                      py-1
-                      rounded
-                      text-xs
-                      font-firma-semibold
-                      opacity-70
-                      cursor-pointer
-                    "
-                    :class="[
-                      hourlyDuration[i].checked
-                        ? 'bg-custom-blue-lighter text-regalBlue-200'
-                        : 'bg-custom-gray-bg text-custom-dark',
-                    ]"
-                    >{{ e.quantity }}</label
-                  >
-                </div>
-              </div>
-            </div>
+          <div class="grid">
+            <p class="font-firma-light text-sm">Pending Job Applications</p>
+            <p class="text-3xl font-firma-semibold">
+              <sup class="text-sm font-firma-semibold">No.</sup>
+              {{
+                numberFormatter(summary.totalNumberOfLoanApplication).format(
+                  '0,0'
+                )
+              }}
+            </p>
           </div>
         </div>
       </div>
-      <div class="col-span-3 grid h-fit">
-        <header class="grid justify-between">
-          <legend class="font-firma-semibold md:text-xl text-xl">
-            Showing 46 jobs
-          </legend>
-        </header>
 
-        <section class="grid grid-cols-3 gap-8 md:mt-8">
-          <div
-            v-for="n in 27"
-            :key="n"
-            class="col-span-1 rounded-xl bg-white p-6 grid"
-          >
-            <div class="h-16 w-16 bg-custom-dark-lighter rounded-xl"></div>
-            <h6 class="mt-4 font-firma-medium text-xl">Mechanic Village</h6>
-            <h6 class="mt-4 font-firma-light text-sm text-custom-dark">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when ...
-            </h6>
+      <div class="mt-8 sm:mt-16 flex justify-between w-full items-center">
+        <legend class="font-firma-semibold md:text-2xl text-xl">
+          Companies (2)
+        </legend>
+        <nuxt-link
+          to="/companies/new"
+          type="submit"
+          class="
+            px-6
+            py-3
+            bg-gray-400
+            text-white
+            rounded-lg
+            text-sm
+            hover:bg-gray-800
+            focus:outline-none focus:bg-gray-800
+          "
+        >
+          Add company
+        </nuxt-link>
+      </div>
 
-            <div class="flex flex-wrap gap-3 mt-4">
-              <label
-                class="
-                  px-3
-                  py-1
-                  text-regalBlue-200
-                  rounded-lg
-                  text-xs
-                  bg-custom-blue-lighter
-                "
-                >Fintech</label
-              >
-              <label
-                class="
-                  px-3
-                  py-1
-                  text-regalBlue-200
-                  rounded-lg
-                  text-xs
-                  bg-custom-blue-lighter
-                "
-                >SEO</label
-              >
-              <label
-                class="
-                  px-3
-                  py-1
-                  text-regalBlue-200
-                  rounded-lg
-                  text-xs
-                  bg-custom-blue-lighter
-                "
-                >Laundry</label
-              >
-            </div>
-
-            <div class="flex gap-x-4 mt-8 w-full">
-              <button
-                class="
-                  px-4
-                  py-2
-                  bg-regalBlue-200
-                  rounded-lg
-                  font-firma-light
-                  text-custom-blue-lighter
-                  w-full
-                "
-              >
-                Apply now
-              </button>
-              <button
-                class="
-                  px-4
-                  py-2
-                  bg-custom-gray-bg
-                  rounded-lg
-                  font-firma-light
-                  text-custom-dark
-                  w-full
-                "
-              >
-                Message
-              </button>
-            </div>
+      <div
+        v-if="tableData.length > 0"
+        class="
+          md:col-span-8
+          col-span-12
+          border border-gray-200
+          h-auto
+          rounded-2xl
+          md:px-8 md:py-4
+          p-4
+          mt-4
+        "
+      >
+        <div class="mt-4 border-b border-gray-200 pb-2">
+          <div class="grid grid-cols-12 w-full">
+            <label class="md:col-span-3 col-span-8 text-sm font-firma-medium"
+              >Company name</label
+            >
+            <label
+              class="md:col-span-2 col-span-4 text-sm font-firma-medium flex"
+              >Email/Phone</label
+            >
+            <label
+              class="hidden md:block md:col-span-2 text-sm font-firma-medium"
+              >State/Country</label
+            >
+            <label
+              class="hidden md:block md:col-span-3 text-sm font-firma-medium"
+              >Jobs needed</label
+            >
+            <label
+              class="hidden md:block md:col-span-2 text-sm font-firma-medium"
+            ></label>
           </div>
-        </section>
+        </div>
+        <div
+          v-for="(td, i) in tableData"
+          :key="i"
+          class="mt-4 pt-2 pb-3"
+          :class="[
+            i === tableData.length - 1 ? '' : 'border-b border-gray-200',
+          ]"
+        >
+          <div class="grid grid-cols-12 w-full items-center">
+            <div
+              class="
+                md:col-span-3
+                col-span-8
+                flex
+                gap-x-4
+                items-center
+                truncate
+              "
+            >
+              <div
+                class="
+                  bg-red-50
+                  rounded-full
+                  text-sm text-center
+                  h-10
+                  w-10
+                  items-center
+                  justify-center
+                  pt-0.5
+                  hidden
+                  md:flex
+                "
+              >
+                <span class="font-firma-semibold text-regalRed-300 text-xs">{{
+                  getInitials(td.company_name)
+                }}</span>
+              </div>
+              <div class="grid gap-y-0">
+                <h3
+                  class="text-sm font-firma-medium hidden md:block capitalize"
+                >
+                  {{ td.company_name }}
+                </h3>
+                <nuxt-link
+                  to="/loans/"
+                  class="
+                    text-sm
+                    font-firma-medium
+                    md:hidden
+                    underline
+                    text-custom-blue-2
+                    capitalize
+                  "
+                >
+                  {{ td.company_name }}
+                </nuxt-link>
+                <h3 class="text-sm font-firma-light underline hidden md:block">
+                  ID-{{ shortenID(td.id) }}
+                </h3>
+              </div>
+            </div>
+            <label class="col-span-2 text-sm font-firma-light"
+              ><span class="md:block hidden text-sm font-firma-light">
+                {{ td.company_email }}
+              </span>
+              <span class="md:block hidden text-sm">
+                {{ td.company_phone }}
+              </span></label
+            >
+            <label class="col-span-2 text-sm font-firma-light"
+              ><span class="md:block hidden text-sm font-firma-light">
+                {{ td.company_state }}
+              </span>
+              <span class="md:block hidden text-sm">
+                {{ td.company_country }}
+              </span></label
+            >
+            <label
+              class="
+                md:col-span-3
+                truncate
+                text-sm
+                hidden
+                md:block
+                font-firma-light
+              "
+            >
+              {{ td.company_job_needed.join(', ') }}
+            </label>
+            <nuxt-link
+              :to="'/companies/' + td.id"
+              class="
+                col-span-2
+                underline
+                text-sm
+                font-firma-light
+                text-regalRed-200
+                hidden
+                md:block
+              "
+            >
+              View details
+            </nuxt-link>
+          </div>
+        </div>
+      </div>
+      <div v-else class="py-8 text-center">
+        <p
+          class="
+            text-sm text-gray-600
+            font-firma-medium
+            flex
+            justify-center
+            items-center
+            h-full
+          "
+        >
+          No data available
+        </p>
       </div>
     </div>
   </div>
@@ -410,76 +350,54 @@
 
 <script>
 import numeral from 'numeral'
-import slugify from 'slugify'
-
-const typeOfEmployment = [
-  { name: 'Full time', value: 53 },
-  { name: 'Part time', value: 60 },
-  { name: 'Remote', value: 89 },
-  { name: 'Internship', value: 21 },
-  { name: 'Training', value: 12 },
-].map((te, i) => ({
-  ...te,
-  slug: slugify(te.name, { lower: true, replacement: '-' }),
-  checked: i === 2,
-}))
-
-let salaryRange = [700, 1000, 1200, 1400, 1500, 1800, 2000, 3000]
-
-salaryRange = salaryRange.map((value, i) => {
-  const nextValue = salaryRange[i + 1]
-  const name = `$${value} ${nextValue ? '- $' + nextValue : 'and above'}`
-  return {
-    value,
-    quantity: Math.floor(Math.random() * 99) + 1,
-    name,
-    slug: slugify(name, { lower: true, replacement: '-' }),
-    checked: i === 1,
-  }
-})
-
-let hourlyDuration = [1, 2, 3, 4, 5, 6]
-
-hourlyDuration = hourlyDuration.map((value, i) => {
-  const name = `${value} ${value > 1 ? 'hours' : 'hour'}`
-  return {
-    value,
-    quantity: Math.floor(Math.random() * 99) + 1,
-    name,
-    slug: slugify(name, { lower: true, replacement: '-' }),
-    checked:
-      i === Math.floor(Math.random() * (hourlyDuration.length - 1 - 1 + 1) + 0),
-  }
-})
+import dayjs from 'dayjs'
 
 export default {
-  name: 'Home',
-  components: {},
+  name: 'CompaniesPage',
   layout: 'authenticated',
   data() {
     return {
-      typeOfEmployment,
-      salaryRange,
-      hourlyDuration,
-    }
-  },
-  head() {
-    return {
-      title: 'Browse jobs | Kontrack',
+      summary: {},
+      tableData: Array.from({ length: 10 }).map((td) => ({
+        id: '00191ffa-c2f5-4d02-8676-85620357e500',
+        company_name: 'Hygeia',
+        company_email: 'hygeia@props.co',
+        company_phone: '1-540-360-1089',
+        company_state: 'Nevada',
+        company_country: 'Mayotte',
+        company_job_needed: [
+          'Retail',
+          'Extraction',
+          'Installation',
+          'Food',
+          'Other',
+        ],
+      })),
     }
   },
   computed: {
     numberFormatter() {
       return numeral
     },
+    dateFormatter() {
+      return dayjs
+    },
   },
   methods: {
-    selectDateFilter(r) {
-      this.loanApplication.dateFilter = r
-      this.loanApplication.dateRange = {
-        start: new Date(),
-        end: null,
+    shortenID(id) {
+      const exploded = id?.split('-')
+      return exploded[0].toUpperCase()
+    },
+    getInitials(name = '') {
+      name = name?.replace(/\s\s+/g, ' ').toUpperCase().split(' ')
+      if (name.length < 2) {
+        const n = name[0].split('')
+        return `${n[0]}${n[1]}`
       }
+      const exploded = name
+      return exploded.length > 1
+        ? exploded[0][0] + exploded[1][0]
+        : exploded[0][0] + exploded[0][1]
     },
   },
 }

@@ -22,7 +22,7 @@
           <form method="POST" @submit.prevent="register">
             <div>
               <label
-                for="name"
+                for="firstName"
                 class="
                   block
                   text-tiny
@@ -31,12 +31,12 @@
                   font-firma-medium
                 "
               >
-                Full name
+                First name
               </label>
               <ValidationProvider v-slot="{ errors }" rules="required">
                 <div class="relative text-gray-700 mt-1">
                   <input
-                    v-model="name"
+                    v-model="firstName"
                     class="
                       font-firma-light
                       text-small text-grey-300
@@ -54,10 +54,10 @@
                       focus:ring-regalRed-200
                       focus:border-regalRed-200
                     "
-                    placeholder="Enter full name"
-                    name="name"
-                    type="name"
-                    autocomplete="name"
+                    placeholder="Enter first name"
+                    name="firstName"
+                    type="firstName"
+                    autocomplete="firstName"
                   />
 
                   <div
@@ -89,9 +89,84 @@
                 <span class="text-customRed-100 text-xs">{{ errors[0] }}</span>
               </ValidationProvider>
               <span
-                v-if="serverErrors.name"
+                v-if="serverErrors.first_name"
                 class="text-customRed-100 text-xs"
-                >{{ serverErrors.name[0] }}</span
+                >{{ serverErrors.first_name[0] }}</span
+              >
+            </div>
+
+            <div class="mt-4">
+              <label
+                for="lastName"
+                class="
+                  block
+                  text-tiny
+                  font-bold
+                  text-grey-300
+                  font-firma-medium
+                "
+              >
+                Last name
+              </label>
+              <ValidationProvider v-slot="{ errors }" rules="required">
+                <div class="relative text-gray-700 mt-1">
+                  <input
+                    v-model="lastName"
+                    class="
+                      font-firma-light
+                      text-small text-grey-300
+                      w-full
+                      pl-12
+                      pr-3
+                      appearance-none
+                      block
+                      py-4
+                      px-4
+                      border-2 border-grey-200
+                      rounded-md
+                      placeholder-gray-800
+                      focus:outline-none
+                      focus:ring-regalRed-200
+                      focus:border-regalRed-200
+                    "
+                    placeholder="Enter first name"
+                    name="lastName"
+                    type="lastName"
+                    autocomplete="lastName"
+                  />
+
+                  <div
+                    class="
+                      absolute
+                      inset-y-0
+                      left-0
+                      flex
+                      items-center
+                      px-2
+                      ml-2
+                      pointer-events-none
+                    "
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 17C5 15.5855 5.5619 14.229 6.5621 13.2288C7.56229 12.2286 8.91885 11.6667 10.3333 11.6667C11.7478 11.6667 13.1044 12.2286 14.1046 13.2288C15.1048 14.229 15.6667 15.5855 15.6667 17H14.3333C14.3333 15.9391 13.9119 14.9217 13.1618 14.1716C12.4116 13.4214 11.3942 13 10.3333 13C9.27247 13 8.25505 13.4214 7.50491 14.1716C6.75476 14.9217 6.33333 15.9391 6.33333 17H5ZM10.3333 11C8.12333 11 6.33333 9.21 6.33333 7C6.33333 4.79 8.12333 3 10.3333 3C12.5433 3 14.3333 4.79 14.3333 7C14.3333 9.21 12.5433 11 10.3333 11ZM10.3333 9.66667C11.8067 9.66667 13 8.47333 13 7C13 5.52667 11.8067 4.33333 10.3333 4.33333C8.86 4.33333 7.66667 5.52667 7.66667 7C7.66667 8.47333 8.86 9.66667 10.3333 9.66667Z"
+                        fill="#6D7D93"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <span class="text-customRed-100 text-xs">{{ errors[0] }}</span>
+              </ValidationProvider>
+              <span
+                v-if="serverErrors.last_name"
+                class="text-customRed-100 text-xs"
+                >{{ serverErrors.last_name[0] }}</span
               >
             </div>
 
@@ -122,7 +197,7 @@
                       block
                       py-4
                       px-4
-                      border border-grey-200
+                      border-2 border-grey-200
                       rounded-md
                       placeholder-gray-800
                       focus:outline-none
@@ -200,7 +275,7 @@
                       block
                       py-4
                       px-4
-                      border border-grey-200
+                      border-2 border-grey-200
                       rounded-md
                       placeholder-gray-800
                       focus:outline-none
@@ -274,7 +349,7 @@
                       py-4
                       px-4
                       pr-16
-                      border border-grey-200
+                      border-2 border-grey-200
                       rounded-md
                       shadow-none
                       placeholder-gray-800
@@ -363,7 +438,7 @@
 
             <div class="mt-5">
               <label
-                for="password"
+                for="passwordConfirmation"
                 class="
                   block
                   text-tiny
@@ -388,7 +463,7 @@
                       w-full
                       py-4
                       px-4
-                      border border-grey-200
+                      border-2 border-grey-200
                       rounded-md
                       shadow-none
                       placeholder-gray-800
@@ -530,7 +605,8 @@ export default {
     password: null,
     passwordConfirmation: null,
     email: null,
-    name: null,
+    firstName: null,
+    lastName: null,
     phone: null,
     viewPassword: false,
     viewPasswordConfirmation: false,
@@ -548,7 +624,8 @@ export default {
           })
         }
         const { status } = await this.$axios.post('/auth/register', {
-          name: this.name,
+          first_name: this.firstName,
+          last_name: this.lastName,
           email: this.email,
           phone: this.phone,
           password: this.password,

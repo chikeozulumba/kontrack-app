@@ -117,3 +117,7 @@ span.select2-container--default .select2-selection--multiple {
 .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
     background-color: #F03738 !important;
 }
+
+::placeholder {
+    font-family: 'BR Firma Light';
+}
