@@ -1,4 +1,4 @@
 export default {
-  profile: (state) => state.profile,
+  profile: (state) => state.data,
   fetched: (state) => state.fetched,
 }

@@ -103,7 +103,7 @@
           </svg>
 
           <div class="grid">
-            <p class="font-firma-light text-sm">Companies available</p>
+            <p class="font-firma-light text-sm">Jobs completed</p>
             <p class="text-3xl font-firma-semibold">
               <sup class="text-sm font-firma-semibold">No.</sup>
               {{
@@ -169,24 +169,42 @@
 
       <div class="mt-8 sm:mt-16 flex justify-between w-full items-center">
         <legend class="font-firma-semibold md:text-2xl text-xl">
-          Companies (2)
+          Companies ({{ tableData.length }})
         </legend>
-        <nuxt-link
-          to="/companies/new"
-          type="submit"
+        <button
           class="
             px-6
             py-3
             bg-gray-400
             text-white
             rounded-lg
-            text-sm
             hover:bg-gray-800
             focus:outline-none focus:bg-gray-800
+            flex
+            items-center
+            gap-x-2
+            font-firma-light
           "
+          @click.prevent="showAddNewJobModal = true"
         >
-          Add company
-        </nuxt-link>
+          <span>
+            <svg
+              class="stroke-current h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </span>
+          Post new job
+        </button>
       </div>
 
       <div
@@ -311,7 +329,7 @@
                 font-firma-light
               "
             >
-              {{ td.company_job_needed.join(', ') }}
+              {{ td.job_categories.join(', ') }}
             </label>
             <nuxt-link
               :to="'/companies/' + td.id"
@@ -345,19 +363,926 @@
         </p>
       </div>
     </div>
+
+    <slide-over-modal
+      :show="showAddNewJobModal"
+      @close="showAddNewJobModal = false"
+    >
+      <template #title>
+        <div class="p-4 sm:p-8 text-gray-800 font-medium bg-custom-dark-5">
+          <legend
+            id="slide-over-title"
+            class="font-semibold tracking-wider text-2xl font-firma-semibold"
+          >
+            Post Job
+          </legend>
+          <p class="text-sm mt-4 font-firma-light max-w-md text-gray-600">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet,
+            molestiae voluptas eligendi eum consequuntur ullam explicabo tempora
+          </p>
+        </div>
+      </template>
+      <template #content>
+        <div class="px-4 sm:px-8 pb-12 text-gray-800">
+          <section class="grid grid-cols-1 gap-8 md:mt-8 max-w-2xl">
+            <div class="col-span-1">
+              <form @submit.prevent="saveChanges">
+                <div class="grid divide-y divide-gray-200 divide-solid gap-y-8">
+                  <div class="grid grid-cols-6 gap-6">
+                    <div class="col-span-6">
+                      <label
+                        for="job_title"
+                        class="block text-sm font-medium text-gray-700"
+                        >Job title</label
+                      >
+                      <input
+                        id="job_title"
+                        v-model="form.job_title"
+                        type="text"
+                        name="job_title"
+                        autocomplete="given-name"
+                        placeholder="Enter job title"
+                        class="
+                          focus:ring-regalRed-200 focus:border-regalRed-200
+                          block
+                          w-full
+                          sm:text-lg
+                          border-gray-200
+                          rounded-md
+                          p-3
+                          text-sm
+                        "
+                      />
+                      <span
+                        v-if="serverValidationErrors.job_title"
+                        class="text-customRed-100 text-xs"
+                        >{{ serverValidationErrors.job_title[0] }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3">
+                      <label
+                        for="budget_minimum"
+                        class="block text-sm font-medium text-gray-700"
+                        >Minimum budget</label
+                      >
+                      <div class="mt-1 relative rounded-md">
+                        <div
+                          class="
+                            absolute
+                            inset-y-0
+                            left-0
+                            pl-3
+                            flex
+                            items-center
+                            pointer-events-none
+                          "
+                        >
+                          <span class="text-gray-500 sm:text-sm">
+                            {{
+                              form.budget_minimum_currency === 'EUR' ? '€' : '$'
+                            }}
+                          </span>
+                        </div>
+                        <input
+                          id="budget_minimum"
+                          v-model="form.budget_minimum"
+                          type="number"
+                          name="budget_minimum"
+                          class="
+                            pl-7
+                            pr-12
+                            focus:ring-regalRed-200 focus:border-regalRed-200
+                            block
+                            w-full
+                            sm:text-lg
+                            border-gray-200
+                            rounded-md
+                            p-3
+                            text-sm
+                          "
+                          placeholder="0.00"
+                        />
+                        <div
+                          class="absolute inset-y-0 right-0 flex items-center"
+                        >
+                          <label for="currency" class="sr-only">Currency</label>
+                          <select
+                            id="currency"
+                            v-model="form.budget_minimum_currency"
+                            name="currency"
+                            class="
+                              focus:ring-regalRed-200 focus:border-regalRed-200
+                              h-full
+                              py-0
+                              pl-2
+                              pr-7
+                              border-transparent
+                              bg-transparent
+                              text-gray-500
+                              sm:text-sm
+                              rounded-md
+                            "
+                          >
+                            <option value="CAD">CAD</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                          </select>
+                        </div>
+                      </div>
+                      <span
+                        v-if="serverValidationErrors.budget_minimum"
+                        class="text-customRed-100 text-xs"
+                        >{{ serverValidationErrors.budget_minimum[0] }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3">
+                      <label
+                        for="budget_maximum"
+                        class="block text-sm font-medium text-gray-700"
+                        >Maximum budget</label
+                      >
+                      <div class="mt-1 relative rounded-md">
+                        <div
+                          class="
+                            absolute
+                            inset-y-0
+                            left-0
+                            pl-3
+                            flex
+                            items-center
+                            pointer-events-none
+                          "
+                        >
+                          <span class="text-gray-500 sm:text-sm">
+                            {{
+                              form.budget_maximum_currency === 'EUR' ? '€' : '$'
+                            }}
+                          </span>
+                        </div>
+                        <input
+                          id="budget_maximum"
+                          v-model="form.budget_maximum"
+                          type="number"
+                          name="budget_maximum"
+                          class="
+                            pl-7
+                            pr-12
+                            focus:ring-regalRed-200 focus:border-regalRed-200
+                            block
+                            w-full
+                            sm:text-lg
+                            border-gray-200
+                            rounded-md
+                            p-3
+                            text-sm
+                          "
+                          placeholder="0.00"
+                        />
+                        <div
+                          class="absolute inset-y-0 right-0 flex items-center"
+                        >
+                          <label for="currency" class="sr-only">Currency</label>
+                          <select
+                            id="currency"
+                            v-model="form.budget_maximum_currency"
+                            name="currency"
+                            class="
+                              focus:ring-regalRed-200 focus:border-regalRed-200
+                              h-full
+                              py-0
+                              pl-2
+                              pr-7
+                              border-transparent
+                              bg-transparent
+                              text-gray-500
+                              sm:text-sm
+                              rounded-md
+                            "
+                          >
+                            <option value="CAD">CAD</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                          </select>
+                        </div>
+                      </div>
+                      <span
+                        v-if="serverValidationErrors.budget_maximum"
+                        class="text-customRed-100 text-xs"
+                        >{{ serverValidationErrors.budget_maximum[0] }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6">
+                      <label
+                        for="job_description"
+                        class="block text-sm font-medium text-gray-700"
+                        >Description</label
+                      >
+                      <textarea
+                        id="job_description"
+                        v-model="form.job_description"
+                        name="job_description"
+                        placeholder="Fill in job description"
+                        class="
+                          focus:ring-regalRed-200 focus:border-regalRed-200
+                          block
+                          w-full
+                          sm:text-lg
+                          border-gray-200
+                          rounded-md
+                          p-3
+                          text-sm
+                          resize-none
+                        "
+                      />
+                      <span
+                        v-if="serverValidationErrors.job_description"
+                        class="text-customRed-100 text-xs"
+                        >{{ serverValidationErrors.job_description[0] }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6">
+                      <label
+                        for="arrival_instructions"
+                        class="block text-sm font-medium text-gray-700"
+                        >Arrival instructions</label
+                      >
+                      <textarea
+                        id="arrival_instructions"
+                        v-model="form.arrival_instructions"
+                        name="arrival_instructions"
+                        placeholder="Fill in necessary instructions or leave empty"
+                        class="
+                          focus:ring-regalRed-200 focus:border-regalRed-200
+                          block
+                          w-full
+                          sm:text-lg
+                          border-gray-200
+                          rounded-md
+                          p-3
+                          text-sm
+                          resize-none
+                        "
+                      />
+                      <span
+                        v-if="serverValidationErrors.arrival_instructions"
+                        class="text-customRed-100 text-xs"
+                        >{{
+                          serverValidationErrors.arrival_instructions[0]
+                        }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3">
+                      <label
+                        for="dress_code_preference"
+                        class="block text-sm font-medium text-gray-700"
+                        >Preferrd dress code</label
+                      >
+                      <select
+                        id="dress_code_preference"
+                        v-model="form.dress_code_preference"
+                        name="dress_code_preference"
+                        autocomplete="dress_code_preference"
+                        class="
+                          block
+                          w-full
+                          p-3
+                          border border-gray-200
+                          bg-white
+                          rounded-md
+                          focus:outline-none
+                          focus:ring-regalRed-200
+                          focus:border-regalRed-200
+                          sm:text-lg
+                          text-sm
+                          h-auto
+                          capitalize
+                        "
+                      >
+                        <option value="any">Any</option>
+                        <option
+                          v-for="(d, i) in [
+                            'casual',
+                            'formal',
+                            'labour',
+                            'professional',
+                            'uniform',
+                            'religious',
+                          ]"
+                          :key="i"
+                        >
+                          {{ d }}
+                        </option>
+                      </select>
+                      <span
+                        v-if="serverValidationErrors.dress_code_preference"
+                        class="text-customRed-100 text-xs"
+                        >{{
+                          serverValidationErrors.dress_code_preference[0]
+                        }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3">
+                      <label
+                        for="gender_preference"
+                        class="block text-sm font-medium text-gray-700"
+                        >Preferred gender</label
+                      >
+                      <select
+                        id="gender_preference"
+                        v-model="form.gender_preference"
+                        name="gender_preference"
+                        autocomplete="gender_preference"
+                        class="
+                          block
+                          w-full
+                          p-3
+                          border border-gray-200
+                          bg-white
+                          rounded-md
+                          focus:outline-none
+                          focus:ring-regalRed-200
+                          focus:border-regalRed-200
+                          sm:text-lg
+                          text-sm
+                          h-auto
+                          capitalize
+                        "
+                      >
+                        <option value="both">Both</option>
+                        <option v-for="(g, i) in ['male', 'female']" :key="i">
+                          {{ g }}
+                        </option>
+                      </select>
+                      <span
+                        v-if="serverValidationErrors.gender_preference"
+                        class="text-customRed-100 text-xs"
+                        >{{ serverValidationErrors.gender_preference[0] }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6">
+                      <label
+                        for="address"
+                        class="block text-sm font-medium text-gray-700"
+                        >Location address</label
+                      >
+                      <input
+                        id="address"
+                        v-model="form.address"
+                        type="text"
+                        name="address"
+                        autocomplete="street-address"
+                        placeholder="Enter company address"
+                        class="
+                          focus:ring-regalRed-200 focus:border-regalRed-200
+                          block
+                          w-full
+                          sm:text-lg
+                          border-gray-200
+                          rounded-md
+                          p-3
+                          text-sm
+                        "
+                      />
+                      <span
+                        v-if="serverValidationErrors.address"
+                        class="text-customRed-100 text-xs"
+                        >{{ serverValidationErrors.address[0] }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3">
+                      <label
+                        for="state"
+                        class="block text-sm font-medium text-gray-700"
+                        >Province/State</label
+                      >
+                      <select
+                        id="state"
+                        v-model="form.state"
+                        name="state"
+                        autocomplete="state"
+                        class="
+                          block
+                          w-full
+                          p-3
+                          border border-gray-200
+                          bg-white
+                          rounded-md
+                          focus:outline-none
+                          focus:ring-regalRed-200
+                          focus:border-regalRed-200
+                          sm:text-lg
+                          text-sm
+                          h-auto
+                        "
+                      >
+                        <option :value="null">Choose</option>
+                        <option>Alabama</option>
+                        <option>Canada</option>
+                        <option>Mexico</option>
+                      </select>
+                      <span
+                        v-if="serverValidationErrors.state"
+                        class="text-customRed-100 text-xs"
+                        >{{ serverValidationErrors.state[0] }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-6 lg:col-span-3">
+                      <label
+                        for="city"
+                        class="block text-sm font-medium text-gray-700"
+                        >City</label
+                      >
+                      <input
+                        id="city"
+                        v-model="form.city"
+                        type="text"
+                        name="city"
+                        placeholder="Enter city location"
+                        class="
+                          focus:ring-regalRed-200 focus:border-regalRed-200
+                          block
+                          w-full
+                          sm:text-lg
+                          border-gray-200
+                          rounded-md
+                          p-3
+                          text-sm
+                        "
+                      />
+                      <span
+                        v-if="serverValidationErrors.city"
+                        class="text-customRed-100 text-xs"
+                        >{{ serverValidationErrors.city[0] }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6 relative">
+                      <label
+                        for="job_categories"
+                        class="block text-sm font-medium text-gray-700"
+                        >Job categories</label
+                      >
+                      <select
+                        class="
+                          job_categories
+                          focus:ring-regalRed-200 focus:border-regalRed-200
+                          block
+                          w-full
+                          sm:text-lg
+                          border border-gray-200
+                          rounded-md
+                          pl-3
+                          text-sm
+                        "
+                        name="job_categories[]"
+                        multiple="multiple"
+                      >
+                        <option
+                          v-for="(jc, i) in jobCategories"
+                          :key="i"
+                          :value="jc.name"
+                        >
+                          {{ jc.name }}
+                        </option>
+                      </select>
+                      <span
+                        v-if="serverValidationErrors.job_categories"
+                        class="text-customRed-100 text-xs"
+                        >{{ serverValidationErrors.job_categories[0] }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6 relative">
+                      <label
+                        for="language_preference"
+                        class="block text-sm font-medium text-gray-700"
+                        >Preferred languages spoken</label
+                      >
+                      <select
+                        class="
+                          language_preference
+                          focus:ring-regalRed-200 focus:border-regalRed-200
+                          block
+                          w-full
+                          sm:text-lg
+                          border border-gray-200
+                          rounded-md
+                          pl-3
+                          text-sm
+                        "
+                        name="language_preference[]"
+                        multiple="multiple"
+                      >
+                        <option
+                          v-for="(jc, i) in allLanguages"
+                          :key="i"
+                          :value="jc.name"
+                        >
+                          {{ jc.name }}
+                        </option>
+                      </select>
+                      <span
+                        v-if="serverValidationErrors.language_preference"
+                        class="text-customRed-100 text-xs"
+                        >{{
+                          serverValidationErrors.language_preference[0]
+                        }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3">
+                      <label
+                        for="start_date"
+                        class="block text-sm font-medium text-gray-700"
+                        >Start date</label
+                      >
+                      <v-date-picker
+                        v-model="form.start_date"
+                        mode="date"
+                        :min-date="new Date()"
+                        color="red"
+                      >
+                        <template #default="{ inputValue, inputEvents }">
+                          <input
+                            class="
+                              focus:ring-2 focus:ring-regalRed-200
+                              datepicker
+                              block
+                              w-full
+                              sm:text-lg
+                              border border-gray-200
+                              rounded-md
+                              p-3
+                              text-sm
+                            "
+                            :value="inputValue"
+                            placeholder="Choose start date"
+                            v-on="inputEvents"
+                          />
+                        </template>
+                      </v-date-picker>
+
+                      <span
+                        v-if="serverValidationErrors.start_date"
+                        class="text-customRed-100 text-xs"
+                        >{{ serverValidationErrors.start_date[0] }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3">
+                      <label
+                        for="end_date"
+                        class="block text-sm font-medium text-gray-700"
+                        >End date</label
+                      >
+                      <v-date-picker
+                        v-model="form.end_date"
+                        mode="date"
+                        :min-date="form.start_date || new Date()"
+                        color="red"
+                      >
+                        <template #default="{ inputValue, inputEvents }">
+                          <input
+                            class="
+                              focus:ring-2 focus:ring-regalRed-200
+                              datepicker
+                              block
+                              w-full
+                              sm:text-lg
+                              border border-gray-200
+                              rounded-md
+                              p-3
+                              text-sm
+                            "
+                            :value="inputValue"
+                            placeholder="Choose end date"
+                            :disabled="!form.start_date"
+                            v-on="inputEvents"
+                          />
+                        </template>
+                      </v-date-picker>
+
+                      <span
+                        v-if="serverValidationErrors.end_date"
+                        class="text-customRed-100 text-xs"
+                        >{{ serverValidationErrors.end_date[0] }}</span
+                      >
+                    </div>
+
+                    <div class="col-span-6">
+                      <div class="flex items-center">
+                        <input
+                          id="is_24hr"
+                          v-model="form.is_24hr"
+                          name="is_24hr"
+                          type="checkbox"
+                          class="
+                            h-4
+                            w-4
+                            text-regalRed-200
+                            focus:ring-regalRed-300
+                            border-gray-300
+                            rounded
+                          "
+                        />
+                        <label
+                          for="is_24hr"
+                          class="
+                            ml-2
+                            mt-1
+                            block
+                            text-sm text-gray-500
+                            font-firma-light
+                          "
+                        >
+                          This is a 24hr job
+                        </label>
+                      </div>
+                    </div>
+
+                    <template v-if="!form.is_24hr">
+                      <div class="col-span-6 sm:col-span-3 custom">
+                        <label
+                          for="time_starts"
+                          class="block text-sm font-medium text-gray-700"
+                          >Starts at</label
+                        >
+
+                        <v-date-picker
+                          v-model="form.time_starts"
+                          color="red"
+                          mode="time"
+                          :timezone="'utc'"
+                        />
+
+                        <span
+                          v-if="serverValidationErrors.time_starts"
+                          class="text-customRed-100 text-xs"
+                          >{{ serverValidationErrors.time_starts[0] }}</span
+                        >
+                      </div>
+
+                      <div class="col-span-6 sm:col-span-3 custom">
+                        <label
+                          for="time_ends"
+                          class="block text-sm font-medium text-gray-700"
+                          >Ends at</label
+                        >
+
+                        <v-date-picker
+                          v-model="form.time_ends"
+                          color="red"
+                          mode="time"
+                          :timezone="'utc'"
+                        />
+
+                        <span
+                          v-if="serverValidationErrors.time_ends"
+                          class="text-customRed-100 text-xs"
+                          >{{ serverValidationErrors.time_ends[0] }}</span
+                        >
+                      </div>
+                    </template>
+
+                    <div class="col-span-6">
+                      <div class="flex items-center">
+                        <input
+                          id="recurring"
+                          v-model="form.recurring"
+                          name="recurring"
+                          type="checkbox"
+                          class="
+                            h-4
+                            w-4
+                            text-regalRed-200
+                            focus:ring-regalRed-300
+                            border-gray-300
+                            rounded
+                          "
+                        />
+                        <label
+                          for="recurring"
+                          class="
+                            ml-2
+                            mt-1
+                            block
+                            text-sm text-gray-500
+                            font-firma-light
+                          "
+                        >
+                          Set as recurring job
+                        </label>
+                      </div>
+                    </div>
+
+                    <template v-if="form.recurring">
+                      <div class="col-span-6">
+                        <label
+                          for="recurring_bases"
+                          class="block text-sm font-medium text-gray-700"
+                          >Recurring bases</label
+                        >
+                        <select
+                          id="recurring_bases"
+                          v-model="form.recurring_bases"
+                          name="recurring_bases"
+                          autocomplete="recurring_bases"
+                          class="
+                            block
+                            w-full
+                            p-3
+                            border border-gray-200
+                            bg-white
+                            rounded-md
+                            focus:outline-none
+                            focus:ring-regalRed-200
+                            focus:border-regalRed-200
+                            sm:text-lg
+                            text-sm
+                            h-auto
+                            capitalize
+                          "
+                        >
+                          <option :value="null">Choose</option>
+                          <option value="daily">daily</option>
+                          <option value="weekly">weekly</option>
+                          <option value="monthly">monthly</option>
+                          <option value="yearly">yearly</option>
+                        </select>
+                        <span
+                          v-if="serverValidationErrors.recurring_bases"
+                          class="text-customRed-100 text-xs"
+                          >{{ serverValidationErrors.recurring_bases[0] }}</span
+                        >
+                      </div>
+
+                      <div class="col-span-6 sm:col-span-3">
+                        <label
+                          for="recurring_start_date"
+                          class="block text-sm font-medium text-gray-700"
+                          >Recurring start date</label
+                        >
+                        <v-date-picker
+                          v-model="form.recurring_start_date"
+                          mode="date"
+                          :min-date="new Date()"
+                          color="red"
+                        >
+                          <template #default="{ inputValue, inputEvents }">
+                            <input
+                              class="
+                                focus:ring-2 focus:ring-regalRed-200
+                                datepicker
+                                block
+                                w-full
+                                sm:text-lg
+                                border border-gray-200
+                                rounded-md
+                                p-3
+                                text-sm
+                              "
+                              :value="inputValue"
+                              placeholder="Choose recurring start date"
+                              v-on="inputEvents"
+                            />
+                          </template>
+                        </v-date-picker>
+
+                        <span
+                          v-if="serverValidationErrors.recurring_start_date"
+                          class="text-customRed-100 text-xs"
+                          >{{
+                            serverValidationErrors.recurring_start_date[0]
+                          }}</span
+                        >
+                      </div>
+
+                      <div class="col-span-6 sm:col-span-3">
+                        <label
+                          for="recurring_end_date"
+                          class="block text-sm font-medium text-gray-700"
+                          >Recurring end date</label
+                        >
+                        <v-date-picker
+                          v-model="form.recurring_end_date"
+                          mode="date"
+                          :min-date="form.recurring_start_date || new Date()"
+                          color="red"
+                        >
+                          <template #default="{ inputValue, inputEvents }">
+                            <input
+                              class="
+                                focus:ring-2 focus:ring-regalRed-200
+                                datepicker
+                                block
+                                w-full
+                                sm:text-lg
+                                border border-gray-200
+                                rounded-md
+                                p-3
+                                text-sm
+                              "
+                              :value="inputValue"
+                              placeholder="Choose recurring end date"
+                              :disabled="!form.recurring_start_date"
+                              v-on="inputEvents"
+                            />
+                          </template>
+                        </v-date-picker>
+                        <span
+                          v-if="serverValidationErrors.recurring_end_date"
+                          class="text-customRed-100 text-xs"
+                          >{{
+                            serverValidationErrors.recurring_end_date[0]
+                          }}</span
+                        >
+                      </div>
+                    </template>
+                  </div>
+
+                  <div v-if="formDirty" class="grid grid-cols-1">
+                    <button
+                      type="submit"
+                      class="
+                        p-4
+                        bg-gray-700
+                        text-white
+                        mt-8
+                        rounded-lg
+                        sm:text-lg
+                        text-sm
+                        hover:bg-gray-900
+                        focus:outline-none focus:bg-gray-900
+                      "
+                    >
+                      Create job offer
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div>
+      </template>
+    </slide-over-modal>
   </div>
 </template>
 
 <script>
+/* eslint-disable no-undef */
+
 import numeral from 'numeral'
 import dayjs from 'dayjs'
 
+const defaultForm = {
+  job_title: null,
+  job_description: null,
+  arrival_instructions: null,
+  gender_preference: 'both',
+  dress_code_preference: 'any',
+  country: null,
+  state: null,
+  start_date: null,
+  end_date: null,
+  job_categories: [],
+  language_preference: [],
+  budget_minimum: null,
+  budget_maximum: null,
+  budget_minimum_currency: 'CAD',
+  budget_maximum_currency: 'CAD',
+  recurring_start_date: null,
+  recurring_end_date: null,
+  recurring: false,
+  recurring_bases: null,
+  is_24hr: true,
+  time_starts: new Date(),
+  time_ends: new Date(),
+  address: null,
+  city: null,
+}
+
 export default {
   name: 'CompaniesPage',
+  components: {
+    'slide-over-modal': () => import('~/components/modals/slideover-modal.vue'),
+  },
   layout: 'authenticated',
   data() {
     return {
+      showAddNewJobModal: false,
       summary: {},
+      form: defaultForm,
+      serverValidationErrors: {},
+      formDirty: false,
       tableData: Array.from({ length: 10 }).map((td) => ({
         id: '00191ffa-c2f5-4d02-8676-85620357e500',
         company_name: 'Hygeia',
@@ -365,7 +1290,7 @@ export default {
         company_phone: '1-540-360-1089',
         company_state: 'Nevada',
         company_country: 'Mayotte',
-        company_job_needed: [
+        job_categories: [
           'Retail',
           'Extraction',
           'Installation',
@@ -373,6 +1298,8 @@ export default {
           'Other',
         ],
       })),
+      jobCategories: [],
+      allLanguages: [],
     }
   },
   computed: {
@@ -382,8 +1309,73 @@ export default {
     dateFormatter() {
       return dayjs
     },
+    user() {
+      return this.$auth.user
+    },
+  },
+  watch: {
+    form: {
+      handler() {
+        this.formDirty = true
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    this.jobCategories = (this.user.profile.job_categories || []).map((j) => ({
+      name: j,
+    }))
+    this.allLanguages = (this.user.profile.languages || []).map((j) => ({
+      name: j,
+    }))
+    this.instantiateDropDown()
+  },
+  updated() {
+    this.instantiateDropDown()
   },
   methods: {
+    async saveChanges($evt) {
+      this.serverValidationErrors = {}
+      const data = {
+        ...this.form,
+        job_categories: $('.job_categories')
+          .select2('data')
+          .map((l) => l.id),
+        language_preference: $('.language_preference')
+          .select2('data')
+          .map((l) => l.id),
+        company_id: this.user.company.id,
+      }
+      try {
+        const { status, data: responseData } = await this.$axios.post(
+          '/job/offer/store',
+          data
+        )
+        if ([201].includes(status)) {
+          const { data, message } = responseData
+          this.showAddNewJobModal = false
+          // this.form = Object.assign({}, { ...defaultForm })
+          this.$toast({
+            text: message || `Job offer added successfully.`,
+            type: 'info',
+            time: 4,
+          })
+          this.$store.dispatch('jobs/setViewedJob', data)
+          this.$router.push({ name: 'jobs-id', params: { id: data.id } })
+        }
+      } catch (error) {
+        if (error?.response?.status === 422) {
+          this.serverValidationErrors = error?.response?.data.error
+        }
+        this.$toast({
+          text:
+            error?.response?.data?.message ||
+            'You are not allowed to access your account due to an internal error that would be resolved soon.',
+          type: 'error',
+          time: 4,
+        })
+      }
+    },
     shortenID(id) {
       const exploded = id?.split('-')
       return exploded[0].toUpperCase()
@@ -399,6 +1391,39 @@ export default {
         ? exploded[0][0] + exploded[1][0]
         : exploded[0][0] + exploded[0][1]
     },
+    instantiateDropDown() {
+      $(document).ready(() => {
+        const fields = ['job_categories', 'language_preference']
+        fields.forEach((field) => {
+          const selector = `.${field}`
+          $(selector).select2()
+          $(selector).val(this.user?.company?.[field] || [])
+          $(selector).trigger('change')
+          $(selector).on('select2:select', (e) => {
+            this.formDirty = true
+          })
+        })
+      })
+    },
   },
 }
 </script>
+
+<style>
+.custom .vc-date {
+  display: none !important;
+}
+
+.custom > .vc-container {
+  /* display: none !important; */
+  border-color: rgba(229, 231, 235, 1) !important;
+}
+
+.custom .vc-select-arrow {
+  /* display: none !important; */
+}
+
+.custom select {
+  background-image: none !important;
+}
+</style>

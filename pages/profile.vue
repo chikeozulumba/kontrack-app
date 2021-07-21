@@ -115,6 +115,7 @@ export default {
     if (!this.profileFetched) {
       const profile = await this.fetchUser()
       this.$store.dispatch('profile/setProfile', profile)
+      await this.$auth.setUser(profile)
     }
   },
   methods: {

@@ -120,4 +120,25 @@ span.select2-container--default .select2-selection--multiple {
 
 ::placeholder {
     font-family: 'BR Firma Light';
+    font-size: 1rem;
+}
+
+.datepicker:focus-visible {
+    outline: none !important;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* Firefox */
+
+input[type=number] {
+    -moz-appearance: textfield;
 }

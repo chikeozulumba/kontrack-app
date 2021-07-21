@@ -3,7 +3,8 @@ import actions from './actions'
 import mutations from './mutations'
 
 const defaultState = () => ({
-  data: {},
+  all: [],
+  viewed: {},
   fetched: false,
 })
 

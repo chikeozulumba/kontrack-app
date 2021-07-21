@@ -630,6 +630,7 @@ export default {
           phone: this.phone,
           password: this.password,
           password_confirmation: this.passwordConfirmation,
+          user_type: 1,
         })
 
         let text = 'Registeration was not successful'

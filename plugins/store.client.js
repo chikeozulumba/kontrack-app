@@ -5,7 +5,7 @@ import cookie from 'cookie'
 export default ({ store, req }) => {
   createPersistedState({
     key: 'kontrack',
-    paths: ['profile'],
+    paths: ['profile', 'jobs'],
     storage: {
       getItem: (key) => {
         if (process.server) {

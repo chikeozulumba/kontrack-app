@@ -84,6 +84,11 @@
                       text-sm
                     "
                   />
+                  <span
+                    v-if="serverValidationErrors.first_name"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.first_name[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
@@ -109,6 +114,11 @@
                       text-sm
                     "
                   />
+                  <span
+                    v-if="serverValidationErrors.middle_name"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.middle_name[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
@@ -134,6 +144,11 @@
                       text-sm
                     "
                   />
+                  <span
+                    v-if="serverValidationErrors.last_name"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.last_name[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
@@ -166,6 +181,11 @@
                     <option value="1">Male</option>
                     <option value="0">Female</option>
                   </select>
+                  <span
+                    v-if="serverValidationErrors.gender"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.gender[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
@@ -191,6 +211,11 @@
                       text-sm
                     "
                   />
+                  <span
+                    v-if="serverValidationErrors.email"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.email[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
@@ -216,6 +241,11 @@
                       text-sm
                     "
                   />
+                  <span
+                    v-if="serverValidationErrors.phone"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.phone[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
@@ -240,6 +270,13 @@
                       text-sm
                     "
                   />
+                  <span
+                    v-if="serverValidationErrors.social_security_number"
+                    class="text-customRed-100 text-xs"
+                    >{{
+                      serverValidationErrors.social_security_number[0]
+                    }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
@@ -272,6 +309,11 @@
                       />
                     </template>
                   </v-date-picker>
+                  <span
+                    v-if="serverValidationErrors.dob"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.dob[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6">
@@ -297,6 +339,11 @@
                       text-sm
                     "
                   />
+                  <span
+                    v-if="serverValidationErrors.address"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.address[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
@@ -330,6 +377,11 @@
                     <option>Canada</option>
                     <option>Mexico</option>
                   </select>
+                  <span
+                    v-if="serverValidationErrors.country"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.country[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 sm:col-span-6 lg:col-span-3">
@@ -354,6 +406,11 @@
                       text-sm
                     "
                   />
+                  <span
+                    v-if="serverValidationErrors.province"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.province[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 sm:col-span-6 lg:col-span-3">
@@ -378,6 +435,11 @@
                       text-sm
                     "
                   />
+                  <span
+                    v-if="serverValidationErrors.city"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.city[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 sm:col-span-6 lg:col-span-3">
@@ -402,6 +464,11 @@
                       text-sm
                     "
                   />
+                  <span
+                    v-if="serverValidationErrors.zip"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.zip[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 relative">
@@ -442,6 +509,13 @@
                       Doctorate or higher
                     </option>
                   </select>
+                  <span
+                    v-if="serverValidationErrors.educational_qualifications"
+                    class="text-customRed-100 text-xs"
+                    >{{
+                      serverValidationErrors.educational_qualifications[0]
+                    }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 relative">
@@ -473,11 +547,16 @@
                       {{ lang.name }}
                     </option>
                   </select>
+                  <span
+                    v-if="serverValidationErrors.languages"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.languages[0] }}</span
+                  >
                 </div>
 
                 <div class="col-span-6 relative">
                   <label
-                    for="languages"
+                    for="job_categories"
                     class="block text-sm font-medium text-gray-700"
                     >Job categories</label
                   >
@@ -504,31 +583,12 @@
                       {{ jc.name }}
                     </option>
                   </select>
-                </div>
-
-                <!-- <div class="col-span-6">
-                  <label
-                    for="additional_details"
-                    class="block text-sm font-medium text-gray-700"
-                    >Additional details</label
+                  <span
+                    v-if="serverValidationErrors.job_categories"
+                    class="text-customRed-100 text-xs"
+                    >{{ serverValidationErrors.job_categories[0] }}</span
                   >
-                  <textarea
-                    id="additional_details"
-                    v-model="form.additional_details"
-                    name="additional_details"
-                    class="
-                      focus:ring-regalRed-200 focus:border-regalRed-200
-                      block
-                      w-full
-                      sm:text-lg
-                      border-gray-200
-                      rounded-md
-                      p-3
-                      text-sm
-                      resize-none
-                    "
-                  />
-                </div> -->
+                </div>
               </div>
               <div v-if="formDirty" class="grid grid-cols-1">
                 <button
@@ -558,7 +618,6 @@
 
 <script>
 /* eslint-disable no-undef */
-
 import dayjs from 'dayjs'
 
 export default {
@@ -579,6 +638,7 @@ export default {
       jobCategories: [],
       date: new Date(),
       avatarBase64: [],
+      serverValidationErrors: {},
     }
   },
   watch: {
@@ -634,6 +694,7 @@ export default {
       }
     },
     async saveChanges($evt) {
+      this.serverValidationErrors = {}
       try {
         const { status } = await this.$axios.post('/profile/update', {
           ...this.form,
@@ -646,8 +707,7 @@ export default {
           educational_qualifications: $('.educational_qualifications')
             .select2('data')
             .map((l) => l.id),
-          birth_date: dayjs(this.date).format('YYYY-MM-DD'),
-          birth_year: this.date.getFullYear(),
+          dob: dayjs(this.date).format('YYYY-MM-DD'),
           potraits: this.avatarBase64,
         })
         if (status === 200) {
@@ -711,9 +771,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.datepicker:focus-visible {
-  outline: none !important;
-}
-</style>

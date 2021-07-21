@@ -299,7 +299,7 @@ export default {
         }
         this.$toast({
           text,
-          type: isLoggedIn ? 'success' : 'error',
+          type: isLoggedIn ? 'info' : 'error',
           time: 4,
         })
       } catch (error) {
