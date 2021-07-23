@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import NavMenuComponent from '~/components/NavMenu'
 
 export default {
@@ -25,10 +26,20 @@ export default {
       width: 0,
     }
   },
-  mounted() {
-    // this.contentOffset = (this.$children[0]?.$el?.clientWidth || 0) + 'px'
-    // this.width = `calc(100vw - ${this.contentOffset})`
+  computed: {
+    ...mapGetters({
+      profileFetched: 'profile/fetched',
+    }),
   },
+  beforeMount() {
+    const user = this.$auth.user
+    const data = {
+      ...user,
+      profile_id: user?.profile?.id,
+    }
+    this.$store.dispatch('profile/setProfile', { data, fetched: true })
+  },
+  methods: {},
 }
 </script>
 

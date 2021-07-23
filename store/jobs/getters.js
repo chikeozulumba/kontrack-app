@@ -1,3 +1,8 @@
 export default {
-  jobs: (state) => state.all,
+  all: (state) => state.all,
+  fetched: (state) => state.fetched,
+  viewJob: (state) => (id) => {
+    const job = state.viewed[id] || state.all.find((j) => j.id === id)
+    return job || 'nof-found-state'
+  },
 }

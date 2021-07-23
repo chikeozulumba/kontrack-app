@@ -108,15 +108,10 @@ export default {
       this.profileMenu = hash[1] || 'profile'
     },
   },
-  async mounted() {
+  mounted() {
     const hash = this.$route.hash.split('#')
     this.view = hash[1] || 'profile'
     this.profileMenu = hash[1] || 'profile'
-    if (!this.profileFetched) {
-      const profile = await this.fetchUser()
-      this.$store.dispatch('profile/setProfile', profile)
-      await this.$auth.setUser(profile)
-    }
   },
   methods: {
     async profileUpdated() {

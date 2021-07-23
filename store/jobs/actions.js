@@ -1,4 +1,7 @@
 export default {
+  addJob(context, data) {
+    context.commit('ADD_JOB', data)
+  },
   setJobs(context, data) {
     context.commit('SET_JOBS', data)
   },

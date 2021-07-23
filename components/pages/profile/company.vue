@@ -262,13 +262,15 @@
                       focus:ring-regalRed-200 focus:border-regalRed-200
                       block
                       w-full
-                      sm:text-lg
+                      sm:text-sm
                       border-gray-200
                       rounded-md
                       p-3
                       text-sm
                       resize-none
+                      font-firma-light
                     "
+                    rows="10"
                   />
                   <span
                     v-if="serverValidationErrors.company_description"
@@ -350,6 +352,7 @@ const defaultCompanyObj = {
   country: null,
   company_description: null,
   company_job_needed: [],
+  currency: 'CAD',
 }
 
 export default {

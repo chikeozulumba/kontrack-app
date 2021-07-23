@@ -11,6 +11,9 @@
         <nuxt-link class="font-firma-light" to="/">Overview</nuxt-link>
       </li>
       <li>
+        <nuxt-link class="font-firma-light" to="/jobs">Jobs</nuxt-link>
+      </li>
+      <li>
         <nuxt-link class="font-firma-light" to="/applications"
           >Applications</nuxt-link
         >
@@ -37,7 +40,7 @@
           user.email
         }}</span>
         <span class="font-firma-normal"
-          >{{ user.first_name }} {{ user.last_name }}</span
+          >{{ user.profile.first_name }} {{ user.profile.last_name }}</span
         >
       </span>
       <span class="md:block hidden">
@@ -71,12 +74,7 @@ export default {
   },
   computed: {
     user() {
-      const user = this.$store.getters['profile/profile']
-      return {
-        ...user,
-        ...(user.profile || {}),
-        profile_id: user?.profile?.id,
-      }
+      return this.$store.getters['profile/profile'] || {}
     },
   },
 }

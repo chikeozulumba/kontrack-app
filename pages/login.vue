@@ -277,6 +277,7 @@ export default {
     async login() {
       try {
         await this.$store.dispatch('profile/resetProfile')
+        await this.$store.dispatch('jobs/resetJobs')
         const validate = await this.$refs.login.validate()
         if (!validate) {
           return this.$toast({
