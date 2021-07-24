@@ -6,7 +6,7 @@
           id="slide-over-title"
           class="font-semibold tracking-wider text-2xl font-firma-semibold"
         >
-          Post Job
+          {{ title }}
         </legend>
         <p class="text-sm mt-4 font-firma-light max-w-md text-gray-600">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet,
@@ -18,7 +18,7 @@
       <div class="px-4 sm:px-8 pb-12 text-gray-800">
         <section class="grid grid-cols-1 gap-8 md:mt-8 max-w-2xl">
           <div class="col-span-1">
-            <form @submit.prevent="saveChanges">
+            <form @submit.prevent="submitForm">
               <div class="grid divide-y divide-gray-200 divide-solid gap-y-8">
                 <div class="grid grid-cols-6 gap-6">
                   <div class="col-span-6">
@@ -661,9 +661,9 @@
                     <div class="grid items-center mt-2 gap-y-2">
                       <div class="flex items-center">
                         <input
-                          id="social_media_profile_links"
-                          v-model="form.social_media_profile_links"
-                          name="social_media_profile_links"
+                          id="require_social_media_profile_links"
+                          v-model="form.require_social_media_profile_links"
+                          name="require_social_media_profile_links"
                           type="checkbox"
                           class="
                             h-4
@@ -673,10 +673,9 @@
                             border-gray-300
                             rounded
                           "
-                          value="one-off"
                         />
                         <label
-                          for="social_media_profile_links"
+                          for="require_social_media_profile_links"
                           class="
                             ml-2
                             mt-1
@@ -690,9 +689,9 @@
                       </div>
                       <div class="flex items-center">
                         <input
-                          id="additional_links"
-                          v-model="form.additional_links"
-                          name="additional_links"
+                          id="require_additional_links"
+                          v-model="form.require_additional_links"
+                          name="require_additional_links"
                           type="checkbox"
                           class="
                             h-4
@@ -702,10 +701,9 @@
                             border-gray-300
                             rounded
                           "
-                          value="one-off"
                         />
                         <label
-                          for="additional_links"
+                          for="require_additional_links"
                           class="
                             ml-2
                             mt-1
@@ -719,9 +717,9 @@
                       </div>
                       <div class="flex items-center">
                         <input
-                          id="allow_resume_upload"
-                          v-model="form.allow_resume_upload"
-                          name="allow_resume_upload"
+                          id="require_allow_resume_upload"
+                          v-model="form.require_allow_resume_upload"
+                          name="require_allow_resume_upload"
                           type="checkbox"
                           class="
                             h-4
@@ -731,10 +729,9 @@
                             border-gray-300
                             rounded
                           "
-                          value="one-off"
                         />
                         <label
-                          for="allow_resume_upload"
+                          for="require_allow_resume_upload"
                           class="
                             ml-2
                             mt-1
@@ -765,7 +762,7 @@
                       focus:outline-none focus:bg-gray-900
                     "
                   >
-                    Create job offer
+                    {{ mode === 'edit' ? 'Save changes' : 'Create job offer' }}
                   </button>
                 </div>
               </div>
@@ -806,17 +803,25 @@ const defaultForm = {
   address: null,
   city: null,
   number_of_workers: null,
-  additional_links: false,
-  allow_resume_upload: false,
-  social_media_profile_links: false,
+  require_additional_links: false,
+  require_allow_resume_upload: false,
+  require_social_media_profile_links: false,
 }
 
 export default {
-  name: 'CreateJobOffer',
+  name: 'ManageJobOffer',
   components: {
     'slide-over-modal': () => import('~/components/modals/slideover-modal.vue'),
   },
   props: {
+    title: {
+      type: String,
+      default: 'Post job',
+    },
+    mode: {
+      type: String,
+      default: 'create',
+    },
     show: {
       type: Boolean,
       default: false,
@@ -833,10 +838,15 @@ export default {
       type: Array,
       default: () => [],
     },
+    jobOffer: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   data() {
+    const jobOffer = Object.assign({}, this.jobOffer)
     return {
-      form: Object.assign({}, {}, defaultForm),
+      form: Object.assign({}, {}, { ...defaultForm, ...jobOffer }),
       serverValidationErrors: {},
       formDirty: false,
     }
@@ -844,7 +854,6 @@ export default {
   watch: {
     form: {
       handler(val) {
-        console.log(val)
         this.formDirty = true
       },
       deep: true,
@@ -857,19 +866,70 @@ export default {
     this.instantiateDropDown()
   },
   methods: {
+    submitForm() {
+      if (this.mode === 'edit') {
+        return this.editJobOffer()
+      }
+
+      this.createJobOffer()
+    },
     instantiateDropDown() {
       $(document).ready(() => {
         const fields = ['job_categories', 'language_preference']
         fields.forEach((field) => {
           const selector = `.${field}`
           $(selector).select2()
-          $(selector).val(this.user?.company?.[field] || [])
+          if (this.mode === 'edit') {
+            $(selector).val(this.jobOffer?.[field] || [])
+          } else {
+            $(selector).val(this.user?.company?.[field] || [])
+          }
           $(selector).trigger('change')
           $(selector).on('select2:select', (e) => (this.formDirty = true))
         })
       })
     },
-    async saveChanges($evt) {
+    async editJobOffer($evt) {
+      this.serverValidationErrors = {}
+      const data = {
+        ...this.form,
+        job_categories: $('.job_categories')
+          .select2('data')
+          .map((l) => l.id),
+        language_preference: $('.language_preference')
+          .select2('data')
+          .map((l) => l.id),
+        company_id: this.user.company.id,
+      }
+      try {
+        const { status, data: responseData } = await this.$axios.post(
+          '/job/offer/update',
+          data
+        )
+        if (status === 200) {
+          const { data } = responseData
+          this.$toast({
+            text: `Job offer updated successfully.`,
+            type: 'info',
+            time: 4,
+          })
+          this.$emit('offer', data)
+          this.$emit('close')
+        }
+      } catch (error) {
+        if (error?.response?.status === 422) {
+          this.serverValidationErrors = error?.response?.data.error
+        }
+        this.$toast({
+          text:
+            error?.response?.data?.message ||
+            'You are not allowed to access your account due to an internal error that would be resolved soon.',
+          type: 'error',
+          time: 4,
+        })
+      }
+    },
+    async createJobOffer($evt) {
       this.serverValidationErrors = {}
       const data = {
         ...this.form,
@@ -888,7 +948,7 @@ export default {
         )
         if ([201].includes(status)) {
           const { data, message } = responseData
-          this.showAddNewJobModal = false
+          this.showModifyJobModal = false
           this.form = Object.assign({}, {}, defaultForm)
           this.$toast({
             text: message || `Job offer added successfully.`,

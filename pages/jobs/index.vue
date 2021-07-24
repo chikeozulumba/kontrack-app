@@ -19,7 +19,7 @@
             gap-x-2
             font-firma-light
           "
-          @click.prevent="showAddNewJobModal = true"
+          @click.prevent="showModifyJobModal = true"
         >
           <span>
             <svg
@@ -201,9 +201,9 @@
         </p>
       </div>
 
-      <create-job-form
+      <modify-job-offer
         :user="user"
-        :show="showAddNewJobModal"
+        :show="showModifyJobModal"
         :all-languages="
           (user.profile.languages || []).map((name) => ({ name }))
         "
@@ -212,7 +212,7 @@
             name,
           }))
         "
-        @close="showAddNewJobModal = false"
+        @close="showModifyJobModal = false"
         @offer="(data) => navigateToJobOffer(data, true, false)"
       />
     </div>
@@ -223,15 +223,18 @@
 import numeral from 'numeral'
 import dayjs from 'dayjs'
 
+const now = dayjs(new Date().toUTCString())
+
 export default {
-  name: 'CompaniesPage',
+  name: 'JobsPage',
   components: {
-    createJobForm: () => import('~/components/pages/index/create-job-form'),
+    'modify-job-offer': () =>
+      import('~/components/pages/index/modify-job-offer'),
   },
   layout: 'authenticated',
   data() {
     return {
-      showAddNewJobModal: false,
+      showModifyJobModal: false,
       serverValidationErrors: {},
       formDirty: false,
     }
@@ -259,14 +262,26 @@ export default {
   },
   async beforeMount() {
     if (!this.isFetched) {
-      await console
-      const data = await this.$getJobOffers()
+      let data = await this.$getJobOffers()
+      data = data.map((d) =>
+        Object.assign(
+          {},
+          {
+            ...d,
+            time_starts: dayjs(
+              `${now.format('YYYY-MM-DD')}T${d.time_starts}.000Z`
+            ).toISOString(),
+            time_ends: dayjs(
+              `${now.format('YYYY-MM-DD')}T${d.time_ends}.000Z`
+            ).toISOString(),
+          }
+        )
+      )
       this.$store.dispatch('jobs/setJobs', { data, fetched: true })
     }
   },
   methods: {
     generateStatus(data) {
-      // const startD = dayjs(data.start_date)
       const endD = dayjs(data.end_date)
       const now = dayjs(new Date())
       if (endD.isBefore(now)) {
@@ -289,12 +304,24 @@ export default {
       }
     },
     navigateToJobOffer(data, add = true, move = false) {
-      this.$store.dispatch('jobs/setViewedJob', data)
+      const d = Object.assign(
+        {},
+        {
+          ...data,
+          // time_starts: dayjs(
+          //   `${now.format('YYYY-MM-DD')}T${data.time_starts}.000Z`
+          // ).toISOString(),
+          // time_ends: dayjs(
+          //   `${now.format('YYYY-MM-DD')}T${data.time_ends}.000Z`
+          // ).toISOString(),
+        }
+      )
+      this.$store.dispatch('jobs/setViewedJob', d)
       if (add) {
-        this.$store.dispatch('jobs/addJob', data)
+        this.$store.dispatch('jobs/addJob', d)
       }
       if (move) {
-        this.$router.push({ name: 'jobs-id', params: { id: data.id } })
+        this.$router.push({ name: 'jobs-id', params: { id: d.id } })
       }
     },
     shortenID(id) {

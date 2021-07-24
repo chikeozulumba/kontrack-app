@@ -350,13 +350,6 @@
           No data available
         </p>
       </div>
-
-      <create-job-form
-        :user="user"
-        :show="showAddNewJobModal"
-        @close="showAddNewJobModal = false"
-        @offer="(data) => navigateToJobOffer(data, false, true)"
-      />
     </div>
   </div>
 </template>
@@ -365,15 +358,14 @@
 import numeral from 'numeral'
 import dayjs from 'dayjs'
 
+const now = dayjs(new Date().toUTCString())
+
 export default {
-  name: 'CompaniesPage',
-  components: {
-    createJobForm: () => import('~/components/pages/index/create-job-form'),
-  },
+  name: 'IndexPage',
   layout: 'authenticated',
   data() {
     return {
-      showAddNewJobModal: false,
+      showModifyJobModal: false,
       summary: {},
       serverValidationErrors: {},
       formDirty: false,
@@ -402,8 +394,21 @@ export default {
   },
   async beforeMount() {
     if (!this.isFetched) {
-      await console
-      const data = await this.$getJobOffers()
+      let data = await this.$getJobOffers()
+      data = data.map((d) =>
+        Object.assign(
+          {},
+          {
+            ...d,
+            time_starts: dayjs(
+              `${now.format('YYYY-MM-DD')}T${d.time_starts}.000Z`
+            ).toISOString(),
+            time_ends: dayjs(
+              `${now.format('YYYY-MM-DD')}T${d.time_ends}.000Z`
+            ).toISOString(),
+          }
+        )
+      )
       this.$store.dispatch('jobs/setJobs', { data, fetched: true })
     }
   },

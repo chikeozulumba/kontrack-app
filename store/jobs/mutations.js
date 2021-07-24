@@ -14,6 +14,12 @@ export default {
   },
   UPDATE_VIEWED_JOB(state, job) {
     state.viewed = Object.assign({}, state.viewed, { [job.id]: job })
+    const index = state.all.findIndex((j) => j.id === job.id)
+    if (index > -1) {
+      state.all[index] = job
+    } else {
+      state.all = [job, ...state.all.splice()]
+    }
   },
   RESET_JOBS(state) {
     state = Object.assign(

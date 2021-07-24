@@ -4,7 +4,7 @@
       <nav-menu-component />
       <div
         id="layout-wrapper"
-        class="md:py-8 md:px-14 p-4 min-h-screen bg-custom-gray-bg"
+        class="md:py-8 md:px-14 p-4 min-h-screen bg-custom-gray-bg pb-64"
       >
         <Nuxt />
       </div>
