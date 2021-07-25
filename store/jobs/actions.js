@@ -8,6 +8,9 @@ export default {
   setViewedJob(context, data) {
     context.commit('SET_VIEWED_JOB', data)
   },
+  removeJob(context, id) {
+    context.commit('REMOVE_JOB', id)
+  },
   removeViewedJob(context, data) {
     context.commit('REMOVE_VIEWED_JOB', data)
   },

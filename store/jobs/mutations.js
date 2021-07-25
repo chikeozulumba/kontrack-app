@@ -12,6 +12,13 @@ export default {
   REMOVE_VIEWED_JOB(state, id) {
     state.viewed = Object.assign({}, state.viewed, { [id]: undefined })
   },
+  REMOVE_JOB(state, id) {
+    state.viewed = Object.assign({}, state.viewed, { [id]: undefined })
+    const index = state.all.findIndex((j) => j.id === id)
+    if (index > -1) {
+      state.all.splice(index, 1)
+    }
+  },
   UPDATE_VIEWED_JOB(state, job) {
     state.viewed = Object.assign({}, state.viewed, { [job.id]: job })
     const index = state.all.findIndex((j) => j.id === job.id)

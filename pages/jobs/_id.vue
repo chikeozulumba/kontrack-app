@@ -270,10 +270,20 @@
           </svg>
         </button>
         <button
-          class="mt-0 sm:mt-2 w-fit h-fit p-2 rounded-lg text-white has-tooltip"
+          class="
+            mt-0
+            sm:mt-2
+            w-fit
+            h-fit
+            p-2
+            rounded-lg
+            text-white
+            has-tooltip
+            focus:outline-none
+          "
           :class="[
             job.status === 'active'
-              ? ' bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:bg-yellow-500'
+              ? ' bg-yellow-400 hover:bg-yellow-500 focus:bg-yellow-500'
               : 'bg-green-400 hover:bg-green-500 focus:outline-none focus:bg-green-500',
           ]"
           @click.prevent="changeJobStatus"
@@ -336,6 +346,7 @@
             text-white
             has-tooltip
           "
+          @click.prevent="deleteJobOffer"
         >
           <span
             class="
@@ -393,12 +404,16 @@
           rounded-lg
           sm:text-sm
           text-sm
-          bg-regalRed-200
-          hover:bg-regalRed-300
-          focus:outline-none focus:bg-regalRed-300
+          focus:outline-none
         "
+        :class="[
+          job.status === 'active'
+            ? ' bg-yellow-400 hover:bg-yellow-500 focus:bg-yellow-500'
+            : 'bg-green-400 hover:bg-green-500 focus:bg-green-500',
+        ]"
+        @click.prevent="changeJobStatus"
       >
-        De-activate Job Offer
+        {{ job.status === 'active' ? 'De-activate' : 'Activate' }} Job Offer
       </button>
       <button
         class="
@@ -412,6 +427,7 @@
           hover:bg-regalRed-300
           focus:outline-none focus:bg-regalRed-300
         "
+        @click.prevent="deleteJobOffer"
       >
         Delete Job Offer
       </button>
@@ -516,6 +532,33 @@ export default {
     }
   },
   methods: {
+    async deleteJobOffer() {
+      try {
+        const { status, data = {} } = await this.$axios.post(
+          `job/offer/delete`,
+          {
+            id: this.job.id,
+          }
+        )
+        if (status === 200) {
+          this.$toast({
+            text: data?.message || `Job record successfully removed.`,
+            type: 'info',
+            time: 4,
+          })
+          await this.$router.replace('/jobs')
+          this.$store.dispatch('jobs/removeJob', this.job.id)
+        }
+      } catch (error) {
+        this.$toast({
+          text:
+            error?.response?.data?.message ||
+            `Job record could not be modified.`,
+          type: 'error',
+          time: 4,
+        })
+      }
+    },
     async changeJobStatus() {
       try {
         const s = this.job.status === 'active' ? 'deactivate' : 'activate'
