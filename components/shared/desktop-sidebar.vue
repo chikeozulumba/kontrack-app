@@ -21,9 +21,9 @@
           "
         >
           <img
-            class="w-auto w-auto"
+            class="w-auto"
             src="/images/dashboard-logo.svg"
-            alt="Loanspot"
+            alt="Kcontrack"
           />
         </div>
         <div class="flex-grow mt-6 pt-12 flex flex-col">

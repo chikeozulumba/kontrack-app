@@ -86,11 +86,19 @@
               <label class="text-sm">Time</label>
               <div class="flex flex-row w-full gap-x-2 mt-2">
                 <p class="text-sm font-firma-light text-gray-500">
-                  {{ dateFormatter(job.time_starts).format('h:mm A') }}
+                  {{
+                    dateFormatter('1993-08-01T' + job.time_starts).format(
+                      'h:mm A'
+                    )
+                  }}
                 </p>
                 <span class="text-sm font-firma-light text-gray-500">-</span>
                 <p class="text-sm font-firma-light text-gray-500">
-                  {{ dateFormatter(job.time_ends).format('h:mm A') }}
+                  {{
+                    dateFormatter('1993-08-01T' + job.time_ends).format(
+                      'h:mm A'
+                    )
+                  }}
                 </p>
               </div>
             </div>

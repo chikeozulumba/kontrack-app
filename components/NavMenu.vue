@@ -5,7 +5,9 @@
         'bg-white px-6 md:px-12 flex items-center justify-between border-b border-gray-100 w-full',
     ]"
   >
-    <h3>Kontrack</h3>
+    <nuxt-link to="/">
+      <Logo :custom-class="'h-10'" />
+    </nuxt-link>
     <ul class="flex gap-x-8">
       <li>
         <nuxt-link class="font-firma-light" to="/">Overview</nuxt-link>

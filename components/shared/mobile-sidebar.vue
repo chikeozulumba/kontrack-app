@@ -66,7 +66,7 @@
         <img
           class="h-auto w-auto"
           src="/images/dashboard-logo.svg"
-          alt="Loanspot"
+          alt="Kcontrack"
         />
       </div>
       <div class="mt-5 flex-1 h-0 overflow-y-auto">
